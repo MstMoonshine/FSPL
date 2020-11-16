@@ -91,7 +91,8 @@ $(STAGE_1_BLD_PATH)/$(syn_file_name).c: $(STAGE_1_SRC_PATH)/$(syn_src_file) $(ST
 
 
 clean:
-	-@rm -rf $(BLD_PATH) $(BIN_PATH) $(LIB_PATH);
+	@echo "[*] Cleaning up..."
+	-rm -rf $(BLD_PATH) $(BIN_PATH) $(LIB_PATH);
 
 #Object files in $(OBJS) will be automatically removed.
 .INTERMEDIATE: $(OBJS)
