@@ -1,3 +1,0 @@
-const function <struct a,
-				int,
-				const struct d -> int> g;
