@@ -1,0 +1,17 @@
+int h(int a){
+	return a * 2;
+}
+
+const function <struct a, int, const struct d -> int> g;
+
+int main() {
+	g = lambda <struct a, int b, const struct c -> int> {
+		a.value = b + c.number;
+		return a.value*b*2;
+	}
+	function <int, float> f;
+
+	f = g @ h;
+
+	print(lambda <int a -> int> {return a + 1;} @ h (3));
+}

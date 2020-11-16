@@ -1,4 +1,5 @@
-CC = gcc
+#CC = gcc
+CC = afl-clang-fast
 LEX = flex
 SYN = bison
 AR = ar rcs
