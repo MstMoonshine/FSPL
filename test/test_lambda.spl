@@ -1,0 +1,6 @@
+int main() {
+	lambda <int b, int a -> int> {
+		a.value = b + c.number;
+		return a.value*b*2;
+	};
+}

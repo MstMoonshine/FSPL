@@ -2,7 +2,7 @@ int h(int a){
 	return a * 2;
 }
 
-const function <struct a, int, const struct d -> int> g;
+const function <struct a b, int, const struct d f-> int> g;
 
 int main() {
 

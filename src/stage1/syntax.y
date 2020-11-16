@@ -70,7 +70,7 @@ StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$
 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA Specifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
                  ;
 QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
-                      | QualifiedSpecifier COMMA QualifiedSpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+                      | QualifiedSpecifier COMMA QualifiedSpecifierList { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
                       | %empty { $$ = NULL; }
                       ;
 
@@ -163,7 +163,7 @@ void yyerror(const char *s) {
 
 int main(int argc, char **argv) {
 
-while (__AFL_LOOP(1000)) {
+// while (__AFL_LOOP(1000)) {
     
     if (!check_file_path_legal(argc, argv)) return 1;
     yyin = fopen(argv[1], "r");
@@ -172,6 +172,6 @@ while (__AFL_LOOP(1000)) {
 
     return 0;
 
-} //End of AFL_LOOP
+// } //End of AFL_LOOP
 
 }
