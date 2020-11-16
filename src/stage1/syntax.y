@@ -139,12 +139,6 @@ Args: Exp COMMA Args { $$ = createNode("Args", @$.first_line, NTERM, unionNULL()
 
 %%
 
-void errRedirect(const char *output_name, FILE *fp) {
-    if (!syntaxErrorExists && !lexicalErrorExists) {
-        fp = freopen(output_name, "w+", stderr);
-    }
-}
-
 void yyerror(const char *s) {
     syntaxErrorExists = 1;
     fprintf(stderr, "Error Type B at Line %d: ", yylineno);
