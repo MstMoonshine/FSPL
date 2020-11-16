@@ -2,12 +2,14 @@ int h(int a){
 	return a * 2;
 }
 
-const function <struct a b, int, const struct d f-> int> g;
+const function <struct a,
+				int,
+				const struct d -> int> g;
 
 int main() {
 
 	function <int -> float> f;
-	g = lambda <struct a, int b, const struct c -> int> {
+	g = lambda <struct a b, int b, const struct c d-> int> {
 		a.value = b + c.number;
 		return a.value*b*2;
 	};
