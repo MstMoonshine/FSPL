@@ -1,0 +1,90 @@
+CC = gcc
+LEX = flex
+SYN = bison
+AR = ar rcs
+
+CFLAGS = -I$(ENV_PATH)
+LIBFLAGS = -L$(LIB_PATH) -l$(lib_name)
+LFLAGS = 
+SFLAGS = -d
+
+ENV_PATH = $(shell pwd)
+SRC_PATH = $(ENV_PATH)/src
+LIB_SRC_PATH = $(SRC_PATH)/lib
+LIB_PATH = $(ENV_PATH)/lib
+HEADER_PATH = $(SRC_PATH)/include
+BLD_PATH = $(ENV_PATH)/build
+BIN_PATH = $(ENV_PATH)/bin
+
+
+STAGE_1 = lexical-syntactical
+STAGE_1_SRC_PATH = $(SRC_PATH)/stage1
+STAGE_1_BLD_PATH = $(BLD_PATH)/stage1
+lex_src_file = lex.l
+syn_src_file = syntax.y
+lex_file_name = lex.yy
+syn_file_name = syntax.tab
+
+STAGE_2 = semantic
+
+
+lib_src = $(notdir $(wildcard $(LIB_SRC_PATH)/*.c))
+lib_object = $(lib_src:%.c=%.o)
+lib_name = splc
+lib = lib$(lib_name)
+
+target = $(BIN_PATH)/splc
+OBJS = $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIB_PATH)/$(lib_object)
+notUpToDate:=false
+
+
+all: initial $(target) final
+
+initial:
+	@echo "[*] Building environment..."
+	-@mkdir $(BLD_PATH) 2>/dev/null || true;
+	-@mkdir $(BIN_PATH) 2>/dev/null || true;
+	-@mkdir $(LIB_PATH) 2>/dev/null || true;
+
+$(target): $(LIB_PATH)/$(lib).a $(STAGE_1_BLD_PATH)/$(STAGE_1).o
+	@echo "[*] Generating binary..."
+	$(CC) $(CFLAGS) -o $@ $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIBFLAGS)
+	$(eval notUpToDate:=true)
+
+final:
+	@if [ "$(notUpToDate)" = "false" ]; \
+	then echo "[*] Already up-to-date!"; \
+	else echo "[*] Build successfully! Binary file at: $(BIN_PATH)"; \
+		 echo "[*] Cleaning up"; \
+	fi
+	
+
+
+#Static Library
+lib: $(LIB_PATH)/$(lib).a
+
+$(LIB_PATH)/$(lib).a: $(LIB_PATH)/$(lib_object)
+	$(AR) $@ $^
+	@echo "[*] Library libsplc generated: $(LIB_PATH)/$(lib)"
+
+$(LIB_PATH)/$(lib_object): $(LIB_PATH)/%.o: $(LIB_SRC_PATH)/%.c
+	-@mkdir $(LIB_PATH) 2>/dev/null || true;
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+#Stage 1
+$(STAGE_1_BLD_PATH)/$(STAGE_1).o: $(STAGE_1_BLD_PATH)/$(syn_file_name).c $(STAGE_1_BLD_PATH)/$(syn_file_name).h
+	$(CC) $(CFLAGS) -c $(STAGE_1_BLD_PATH)/$(syn_file_name).c -lfl -ly -o $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIBFLAGS);
+	@echo "[*] Stage 1 completed."
+
+$(STAGE_1_BLD_PATH)/$(syn_file_name).c: $(STAGE_1_SRC_PATH)/$(syn_src_file) $(STAGE_1_SRC_PATH)/$(lex_src_file)
+	-@mkdir $(STAGE_1_BLD_PATH) 2>/dev/null || true;
+	$(LEX) $(LFLAGS) -o $(STAGE_1_BLD_PATH)/$(lex_file_name).c $(STAGE_1_SRC_PATH)/$(lex_src_file);
+	$(SYN) $(SFLAGS) $(STAGE_1_SRC_PATH)/$(syn_src_file) -o $(STAGE_1_BLD_PATH)/$(syn_file_name).c;
+
+
+clean:
+	-@rm -rf $(BLD_PATH) $(BIN_PATH) $(LIB_PATH);
+
+#Object files in $(OBJS) will be automatically removed.
+.INTERMEDIATE: $(OBJS)
+.PHONY: all initial final lib clean
