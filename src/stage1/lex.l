@@ -31,6 +31,7 @@ ID (_|[a-zA-Z])(_|[0-9a-zA-Z])*
 
 CONST const
 TYPE (int)|(float)|(char)
+LAMBDA lambda
 STRUCT struct
 FUNCTION function
 
@@ -56,6 +57,7 @@ PLUS \+
 MINUS -
 MUL \*
 DIV \/
+COMP @
 AND &&
 OR \|\|
 NOT !
@@ -71,6 +73,7 @@ RC \}
 
 {CONST} { yylval = createNode("CONST", yylineno, OTHERS, unionNULL()); return CONST; }
 {TYPE} { yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL()); return TYPE; }
+{LAMBDA} { yylval = createNode("LAMBDA", yylineno, OTHERS, unionNULL()); return LAMBDA; }
 {STRUCT} { yylval = createNode("STRUCT", yylineno, OTHERS, unionNULL()); return STRUCT; }
 {FUNCTION} { yylval = createNode("FUNCTION", yylineno, OTHERS, unionNULL()); return FUNCTION; }
 {IF} { yylval = createNode("IF", yylineno, OTHERS, unionNULL()); return IF; }
@@ -92,6 +95,7 @@ RC \}
 {MINUS} { yylval = createNode("MINUS", yylineno, OTHERS, unionNULL()); return MINUS; }
 {MUL} { yylval = createNode("MUL", yylineno, OTHERS, unionNULL()); return MUL; }
 {DIV} { yylval = createNode("DIV", yylineno, OTHERS, unionNULL()); return DIV; }
+{COMP} { yylval = createNode("COMP", yylineno, OTHERS, unionNULL()); return COMP; }
 {AND} { yylval = createNode("AND", yylineno, OTHERS, unionNULL()); return AND; }
 {OR} { yylval = createNode("OR", yylineno, OTHERS, unionNULL()); return OR; }
 {NOT} { yylval = createNode("NOT", yylineno, OTHERS, unionNULL()); return NOT; }

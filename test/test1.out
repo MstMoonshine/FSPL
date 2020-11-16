@@ -3,58 +3,52 @@ Program (1)
     ExtDef (1)
       QualifiedSpecifier (1)
         Specifier (1)
-          FunctionSpecifier (1)
-            FUNCTION
-            LT
-            SpecifierList (1)
-              Specifier (1)
-                TYPE: int
-              COMMA
-              SpecifierList (1)
-                Specifier (1)
-                  TYPE: float
-                COMMA
-                SpecifierList (1)
-                  Specifier (1)
-                    StructSpecifier (1)
-                      STRUCT
-                      ID: a
-            RA
-            Specifier (1)
-              TYPE: int
-            GT
-      ExtDecList (1)
-        VarDec (1)
-          ID: func
-      SEMI
-    ExtDefList (3)
-      ExtDef (3)
-        QualifiedSpecifier (3)
-          Specifier (3)
-            StructSpecifier (3)
-              STRUCT
-              ID: b
-        FunDec (3)
-          ID: func
-          LP
-          VarList (3)
-            ParamDec (3)
-              QualifiedSpecifier (3)
-                Specifier (3)
-                  TYPE: int
-              VarDec (3)
-                ID: a
-          RP
-        CompSt (3)
-          LC
-          StmtList (4)
-            Stmt (4)
-              Exp (4)
-                ID: printf
+          TYPE: int
+      FunDec (1)
+        ID: sum
+        LP
+        RP
+      CompSt (1)
+        LC
+        StmtList (2)
+          Stmt (2)
+            Exp (2)
+              Exp (2)
+                LambdaExp (2)
+                  LAMBDA
+                  LT
+                  VarList (2)
+                    ParamDec (2)
+                      QualifiedSpecifier (2)
+                        Specifier (2)
+                          TYPE: int
+                      VarDec (2)
+                        ID: a
+                  RA
+                  Specifier (2)
+                    TYPE: int
+                  GT
+              COMP
+              Exp (2)
+                Exp (2)
+                  LambdaExp (2)
+                    LAMBDA
+                    LT
+                    VarList (2)
+                      ParamDec (2)
+                        QualifiedSpecifier (2)
+                          Specifier (2)
+                            TYPE: int
+                        VarDec (2)
+                          ID: a
+                    RA
+                    Specifier (2)
+                      TYPE: int
+                    GT
                 LP
-                Args (4)
-                  Exp (4)
-                    CHAR: '\x02'
+                Args (2)
+                  Exp (2)
+                    INT: 3
                 RP
-              SEMI
-          RC
+            SEMI
+        RC

@@ -1,5 +1,3 @@
-function <int, float, struct a -> int> func;
-
-struct b func(int a) {
-    printf('\x02');
+int sum() {
+    lambda <int a -> int> { return a + 1; } @ lambda <int a -> int> { return a*a; } (3);
 }

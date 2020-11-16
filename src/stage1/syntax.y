@@ -23,6 +23,7 @@
 %left LT LE GT GE EQ NE
 %left PLUS MINUS
 %left MUL DIV
+%left COMP
 %right NOT
 %token DOT
 %token LB RB
@@ -30,6 +31,7 @@
 
 %token IF ELSE WHILE RETURN
 %token SEMI COMMA
+%token LAMBDA
 %token TYPE STRUCT FUNCTION
 %token CONST
 %token INT 
@@ -109,6 +111,8 @@ Dec: VarDec { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertC
    | VarDec ASSIGN Exp { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    ;
 
+LambdaExp: LAMBDA LT VarList RA Specifier GT CompSt { $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); } 
+         ;
 Exp: Exp ASSIGN Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp AND Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp OR Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -123,14 +127,16 @@ Exp: Exp ASSIGN Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL());
    | Exp MINUS Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp MUL Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp DIV Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+   | Exp COMP Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | LP Exp RP { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | MINUS Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
    | NOT Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
-   | ID LP Args RP { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
-   | ID LP Args error { fprintf(stderr, "Missing closing parenthesis \')\'\n"); }
-   | ID LP RP { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+   | Exp LP Args RP { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
+   | Exp LP Args error { fprintf(stderr, "Missing closing parenthesis \')\'\n"); }
+   | Exp LP RP { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp LB Exp RB { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
    | Exp DOT ID { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+   | LambdaExp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
    | ID { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
    | INT { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
    | FLOAT { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
