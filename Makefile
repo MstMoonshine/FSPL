@@ -19,9 +19,10 @@ ENV_PATH = $(shell pwd)
 SRC_PATH = $(ENV_PATH)/src
 LIB_SRC_PATH = $(SRC_PATH)/lib
 LIB_PATH = $(ENV_PATH)/lib
-HEADER_PATH = $(SRC_PATH)/include
+HEADER_PATH = $(ENV_PATH)/include
 BLD_PATH = $(ENV_PATH)/build
 BIN_PATH = $(ENV_PATH)/bin
+DEB_SRC_PATH = $(ENV_PATH)/debug_src
 
 
 STAGE_1 = lexical-syntactical
@@ -49,7 +50,6 @@ all: initial $(target) final
 
 initial:
 	@echo "[*] Building environment..."
-	@echo "$(CSYNFLAGS)"
 	-@mkdir $(BLD_PATH) 2>/dev/null || true;
 	-@mkdir $(BIN_PATH) 2>/dev/null || true;
 	-@mkdir $(LIB_PATH) 2>/dev/null || true;
@@ -66,6 +66,18 @@ final:
 		 echo "[*] Cleaning up"; \
 	fi
 	
+#debug mode
+debug: debug_initial initial $(target) final
+
+debug_initial:
+	@echo "[!] Entering debug mode:"
+	-@mkdir $(LIB_PATH) 2>/dev/null || true;
+	-@cp -r $(SRC_PATH) $(DEB_SRC_PATH);
+	$(eval SFLAGS+=-v -t)
+	$(eval SRC_PATH=$(DEB_SRC_PATH))
+	sed -i 's/main/normalMain/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+	sed -i 's/debugMain/main/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+#sed -i 's/yyparse();/yydebug=1;yyparse();/g' debug/syntax_debug.y
 
 
 #Static Library
@@ -92,8 +104,8 @@ $(STAGE_1_BLD_PATH)/$(syn_file_name).c: $(STAGE_1_SRC_PATH)/$(syn_src_file) $(ST
 
 clean:
 	@echo "[*] Cleaning up..."
-	-rm -rf $(BLD_PATH) $(BIN_PATH) $(LIB_PATH);
+	-rm -rf $(BLD_PATH) $(BIN_PATH) $(LIB_PATH) $(DEB_SRC_PATH);
 
 #Object files in $(OBJS) will be automatically removed.
 .INTERMEDIATE: $(OBJS)
-.PHONY: all initial final lib clean
+.PHONY: all initial final lib debug debug_initial clean

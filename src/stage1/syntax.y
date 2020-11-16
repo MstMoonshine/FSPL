@@ -30,7 +30,7 @@
 
 %token IF ELSE WHILE RETURN
 %token SEMI COMMA
-%token TYPE STRUCT
+%token TYPE STRUCT FUNCTION
 %token CONST
 %token INT 
 %token FLOAT
@@ -56,10 +56,16 @@ QualifiedSpecifier: Specifier { $$ = createNode("QualifiedSpecifier", @$.first_l
                   | CONST Specifier { $$ = createNode("QualifiedSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
 Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          | StructSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+         | FunctionSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          ;
 StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
+FunctionSpecifier: FUNCTION "<" SpecifierList "->" Specifier ">" ID { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 7, $1, $2, $3, $4, $5, $6, $7); }
+                 ;
+SpecifierList: Specifier COMMA SpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+        | %empty { $$ = NULL; }
+        ;
 
 VarDec: ID { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
@@ -144,6 +150,36 @@ void yyerror(const char *s) {
     fprintf(stderr, "Error Type B at Line %d: ", yylineno);
 }
 
+int debugMain(int argc, char **argv) {
+    char *file_path;
+    
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <file_path>\n", argv[0]);
+        return 1;
+    } else if (argc > 2) {
+        fprintf(stderr, "Too many arguments.\n");
+        return 1;
+    } else if (argc == 2) {
+        file_path = argv[1];
+
+        if (strlen(file_path) <= 3 || strcmp(file_path + strlen(file_path) - 4, ".spl")) {
+            fprintf(stderr, "Invalid file: .spl file expected\n");
+            return 1;
+        }
+        if (!(yyin = fopen(file_path, "r"))) {
+            perror(argv[1]);
+            return 1;
+        }
+
+        yydebug = 1;
+        yyparse();
+
+        fclose(yyin);
+        
+        return (lexicalErrorExists || syntaxErrorExists) ? 1 : 0;
+    }
+}
+
 int main(int argc, char **argv) {
 
 // while (__AFL_LOOP(1000)) {
@@ -174,7 +210,6 @@ int main(int argc, char **argv) {
         output_name[strlen(file_path) - 3] = '\0';
         strcat(output_name, "out");
 
-        
         freopen(output_name, "w", stdout);
         FILE *err = freopen("tempErr", "w", stderr);
 
@@ -184,7 +219,7 @@ int main(int argc, char **argv) {
         freopen("/dev/tty", "w", stderr);
 
         if (lexicalErrorExists || syntaxErrorExists) {
-            remove(output_name);
+            // remove(output_name);
             fclose(err);
 
             err = fopen("tempErr", "r");
@@ -192,10 +227,10 @@ int main(int argc, char **argv) {
             while ((c = fgetc(err)) != EOF) putchar(c);
             fclose(err);
 
-            remove("tempErr");
+            // remove("tempErr");
             
         } else {
-			remove("tempErr");
+			// remove("tempErr");
 
             FILE *out = fopen(output_name, "r");
             char c;

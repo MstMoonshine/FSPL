@@ -1,0 +1,17 @@
+Starting parse
+Entering state 0
+Reading a token: Next token is token ID (1.1-4: )
+Reducing stack by rule 3 (line 43):
+-> $$ = nterm ExtDefList (1.1: )
+Stack now 0
+Entering state 6
+Reducing stack by rule 1 (line 40):
+   $1 = nterm ExtDefList (1.1: )
+-> $$ = nterm Program (1.1: )
+Stack now 0
+Entering state 5
+Next token is token ID (1.1-4: )
+Error Type B at Line 1: Error: popping nterm Program (1.1: )
+Stack now 0
+Cleanup: discarding lookahead token ID (1.1-4: )
+Stack now 0

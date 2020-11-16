@@ -32,6 +32,7 @@ ID (_|[a-zA-Z])(_|[0-9a-zA-Z])*
 CONST const
 TYPE (int)|(float)|(char)
 STRUCT struct
+FUNCTION function
 
 IF if
 ELSE else
@@ -70,6 +71,7 @@ RC \}
 {CONST} { yylval = createNode("CONST", yylineno, OTHERS, unionNULL()); return CONST; }
 {TYPE} { yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL()); return TYPE; }
 {STRUCT} { yylval = createNode("STRUCT", yylineno, OTHERS, unionNULL()); return STRUCT; }
+{FUNCTION} { yylval = createNode("FUNCTION", yylineno, OTHERS, unionNULL()); return FUNCTION; }
 {IF} { yylval = createNode("IF", yylineno, OTHERS, unionNULL()); return IF; }
 {ELSE} { yylval = createNode("ELSE", yylineno, OTHERS, unionNULL()); return ELSE; }
 {WHILE} { yylval = createNode("WHILE", yylineno, OTHERS, unionNULL()); return WHILE; }
