@@ -8,7 +8,7 @@
 
     int lineno = 0;
 
-    tree *synTree;
+    tree *parsingTree;
     
 %}
 
@@ -43,7 +43,7 @@
 %token CHAR
 %%
 
-Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); synTree = $$; }
+Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); parsingTree = $$; }
        ;
 ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
           | %empty { $$ = NULL; }
@@ -168,7 +168,7 @@ int main(int argc, char **argv) {
     if (!check_file_path_legal(argc, argv)) return 1;
     yyin = fopen(argv[1], "r");
     yyparse();
-    printTree(synTree, 0);
+    printTree(parsingTree, 0);
 
     return 0;
 
