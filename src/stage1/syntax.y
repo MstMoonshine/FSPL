@@ -1,10 +1,14 @@
 %{
     #include "build/stage1/lex.yy.c"
+    #include "include/io.h"
+    #include "include/parsingTree.h"
 
     void yyerror(const char*);
     short syntaxErrorExists = 0;
 
     int lineno = 0;
+
+    tree *synTree;
     
 %}
 
@@ -39,7 +43,7 @@
 %token CHAR
 %%
 
-Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); printTree($$, 0); }
+Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); synTree = $$; }
        ;
 ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
           | %empty { $$ = NULL; }
@@ -157,98 +161,16 @@ void yyerror(const char *s) {
     fprintf(stderr, "Error Type B at Line %d: ", yylineno);
 }
 
-int debugMain(int argc, char **argv) {
-    char *file_path;
-    
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <file_path>\n", argv[0]);
-        return 1;
-    } else if (argc > 2) {
-        fprintf(stderr, "Too many arguments.\n");
-        return 1;
-    } else if (argc == 2) {
-        file_path = argv[1];
-
-        if (strlen(file_path) <= 3 || strcmp(file_path + strlen(file_path) - 4, ".spl")) {
-            fprintf(stderr, "Invalid file: .spl file expected\n");
-            return 1;
-        }
-        if (!(yyin = fopen(file_path, "r"))) {
-            perror(argv[1]);
-            return 1;
-        }
-
-        yyparse();
-
-        fclose(yyin);
-        
-        return (lexicalErrorExists || syntaxErrorExists) ? 1 : 0;
-    }
-}
-
 int main(int argc, char **argv) {
 
 // while (__AFL_LOOP(1000)) {
-
-    char *file_path;
     
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <file_path>\n", argv[0]);
-        return 1;
-    } else if (argc > 2) {
-        fprintf(stderr, "Too many arguments.\n");
-        return 1;
-    } else if (argc == 2) {
-        file_path = argv[1];
+    if (!check_file_path_legal(argc, argv)) return 1;
+    yyin = fopen(argv[1], "r");
+    yyparse();
+    printTree(synTree, 0);
 
-        if (strlen(file_path) <= 3 || strcmp(file_path + strlen(file_path) - 4, ".spl")) {
-            fprintf(stderr, "Invalid file: .spl file expected\n");
-            return 1;
-        }
-        if (!(yyin = fopen(file_path, "r"))) {
-            perror(argv[1]);
-            return 1;
-        }
-
-        char output_name[strlen(file_path) + 1];
-        for (int i = 0; i < strlen(file_path) - 3; i++)
-            output_name[i] = file_path[i];
-        output_name[strlen(file_path) - 3] = '\0';
-        strcat(output_name, "out");
-
-        freopen(output_name, "w", stdout);
-        FILE *err = freopen("tempErr", "w", stderr);
-
-        yyparse();
-
-        freopen("/dev/tty", "w", stdout);
-        freopen("/dev/tty", "w", stderr);
-
-        if (lexicalErrorExists || syntaxErrorExists) {
-            remove(output_name);
-            fclose(err);
-
-            err = fopen("tempErr", "r");
-            char c;
-            while ((c = fgetc(err)) != EOF) putchar(c);
-            fclose(err);
-
-            remove("tempErr");
-            
-        } else {
-			remove("tempErr");
-
-            FILE *out = fopen(output_name, "r");
-            char c;
-            while ((c = fgetc(out)) != EOF) putchar(c);
-
-            fclose(out);
-        }
-
-        fclose(yyin);
-        
-        return (lexicalErrorExists || syntaxErrorExists) ? 1 : 0;
-    }
+    return 0;
 
 // } //End of AFL_LOOP
 

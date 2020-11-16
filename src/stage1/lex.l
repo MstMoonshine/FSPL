@@ -115,7 +115,10 @@ RC \}
             lexErrorHandler();
             fprintf(stderr, "Id name too long: %s\n", yytext);
         }
-        yylval = createNode(yytext, yylineno, TYPE_ID, unionNULL());
+        char id[33];
+        strncpy(id, yytext, 32);
+        id[32] = '\x0';
+        yylval = createNode(id, yylineno, TYPE_ID, unionNULL());
         return ID;
      }
 

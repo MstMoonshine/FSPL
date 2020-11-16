@@ -34,6 +34,10 @@ lex_file_name = lex.yy
 syn_file_name = syntax.tab
 
 STAGE_2 = semantic
+STAGE_2_SRC_PATH = $(SRC_PATH)/stage2
+STAGE_2_BLD_PATH = $(BLD_PATH)/stage2
+sem_src = $(notdir $(wildcard $(STAGE_2_SRC_PATH)/*.c))
+sem_object = $(sem_src:%.c=%.o)
 
 
 lib_src = $(notdir $(wildcard $(LIB_SRC_PATH)/*.c))
@@ -42,7 +46,9 @@ lib_name = splc
 lib = lib$(lib_name)
 
 target = $(BIN_PATH)/splc
-OBJS = $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIB_PATH)/$(lib_object)
+TAR_OBJS = $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(STAGE_2_BLD_PATH)/$(sem_object)
+LIB_OBJS = $(foreach obj, $(lib_object), $(LIB_PATH)/$(obj))
+OBJS = $(TAR_OBJS) $(LIB_OBJS)
 notUpToDate:=false
 
 
@@ -54,9 +60,9 @@ initial:
 	-@mkdir $(BIN_PATH) 2>/dev/null || true;
 	-@mkdir $(LIB_PATH) 2>/dev/null || true;
 
-$(target): $(LIB_PATH)/$(lib).a $(STAGE_1_BLD_PATH)/$(STAGE_1).o
+$(target): $(LIB_PATH)/$(lib).a $(TAR_OBJS)
 	@echo "[*] Generating binary..."
-	$(CC) $(CFLAGS) -o $@ $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIBFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(TAR_OBJS) $(LIBFLAGS)
 	$(eval notUpToDate:=true)
 
 final:
@@ -75,8 +81,8 @@ debug_initial:
 	-@cp -r $(SRC_PATH) $(DEB_SRC_PATH);
 	$(eval SFLAGS+=-v -t)
 	$(eval SRC_PATH=$(DEB_SRC_PATH))
-	-@sed -i 's/main/normalMain/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
-	-@sed -i 's/debugMain/main/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+	# -@sed -i 's/main/normalMain/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+	# -@sed -i 's/debugMain/main/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
 	-@sed -i 's/yyparse();/yydebug=1;yyparse();/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
 
 cleanDebug:
@@ -86,16 +92,16 @@ cleanDebug:
 #Static Library
 lib: $(LIB_PATH)/$(lib).a
 
-$(LIB_PATH)/$(lib).a: $(LIB_PATH)/$(lib_object)
+$(LIB_PATH)/$(lib).a: $(LIB_OBJS)
 	$(AR) $@ $^
 	@echo "[*] Library libsplc generated: $(LIB_PATH)/$(lib)"
 
-$(LIB_PATH)/$(lib_object): $(LIB_PATH)/%.o: $(LIB_SRC_PATH)/%.c
+$(LIB_OBJS): $(LIB_PATH)/%.o: $(LIB_SRC_PATH)/%.c
 	-@mkdir $(LIB_PATH) 2>/dev/null || true;
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 #Stage 1
-$(STAGE_1_BLD_PATH)/$(STAGE_1).o: $(STAGE_1_BLD_PATH)/$(syn_file_name).c $(STAGE_1_BLD_PATH)/$(syn_file_name).h
+$(STAGE_1_BLD_PATH)/$(STAGE_1).o: $(STAGE_1_BLD_PATH)/$(syn_file_name).c $(STAGE_1_BLD_PATH)/$(syn_file_name).h $(LIB_PATH)/$(lib).a
 	$(CC) $(CFLAGS) -c $(STAGE_1_BLD_PATH)/$(syn_file_name).c $(CSYNFLAGS) -o $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIBFLAGS);
 	@echo "[*] Stage 1 completed."
 
@@ -104,6 +110,11 @@ $(STAGE_1_BLD_PATH)/$(syn_file_name).c: $(STAGE_1_SRC_PATH)/$(syn_src_file) $(ST
 	$(LEX) $(LFLAGS) -o $(STAGE_1_BLD_PATH)/$(lex_file_name).c $(STAGE_1_SRC_PATH)/$(lex_src_file);
 	$(SYN) $(SFLAGS) $(STAGE_1_SRC_PATH)/$(syn_src_file) -o $(STAGE_1_BLD_PATH)/$(syn_file_name).c;
 
+#Stage 2
+$(STAGE_2_BLD_PATH)/$(sem_object): $(STAGE_2_BLD_PATH)/%.o : $(STAGE_2_SRC_PATH)/%.c $(LIB_PATH)/$(lib).a
+	-@mkdir $(STAGE_2_BLD_PATH) 2>/dev/null || true;
+	$(CC) $(CFLAGS) -o $@ -c $<
+	@echo "[*] Stage 2 completed."
 
 clean:
 	@echo "[*] Cleaning up..."
