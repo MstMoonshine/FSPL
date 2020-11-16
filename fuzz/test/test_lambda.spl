@@ -5,11 +5,12 @@ int h(int a){
 const function <struct a, int, const struct d -> int> g;
 
 int main() {
+
+	function <int -> float> f;
 	g = lambda <struct a, int b, const struct c -> int> {
 		a.value = b + c.number;
 		return a.value*b*2;
-	}
-	function <int, float> f;
+	};
 
 	f = g @ h;
 

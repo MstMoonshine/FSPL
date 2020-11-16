@@ -433,7 +433,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  15
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   475
+#define YYLAST   459
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  43
@@ -515,10 +515,10 @@ static const char *const yytname[] =
   "LP", "RP", "IF", "ELSE", "WHILE", "RETURN", "SEMI", "COMMA", "LAMBDA",
   "TYPE", "STRUCT", "FUNCTION", "CONST", "INT", "FLOAT", "CHAR", "$accept",
   "Program", "ExtDefList", "ExtDef", "ExtDecList", "QualifiedSpecifier",
-  "Specifier", "StructSpecifier", "FunctionSpecifier", "SpecifierList",
-  "VarDec", "FunDec", "VarList", "ParamDec", "CompSt", "StmtList", "Stmt",
-  "DefList", "Def", "DecList", "Dec", "LambdaExp", "Exp",
-  "MysteriousLexemeList", "Args", YY_NULLPTR
+  "Specifier", "StructSpecifier", "FunctionSpecifier",
+  "QualifiedSpecifierList", "VarDec", "FunDec", "VarList", "ParamDec",
+  "CompSt", "StmtList", "Stmt", "DefList", "Def", "DecList", "Dec",
+  "LambdaExp", "Exp", "MysteriousLexemeList", "Args", YY_NULLPTR
 };
 #endif
 
@@ -535,10 +535,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -130
+#define YYPACT_NINF -133
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-130)))
+  (!!((Yystate) == (-133)))
 
 #define YYTABLE_NINF -44
 
@@ -549,22 +549,22 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      18,  -130,    14,    10,    11,    17,  -130,    18,    13,  -130,
-    -130,  -130,    21,    11,  -130,  -130,  -130,    25,  -130,    -3,
-      -5,    15,    18,   -11,    29,     5,  -130,    19,    53,    56,
-     108,  -130,    53,    57,    18,    11,    11,  -130,  -130,    53,
-      37,    32,    41,  -130,  -130,  -130,  -130,   188,     0,    12,
-      55,  -130,  -130,  -130,    73,    65,  -130,    18,  -130,    88,
-    -130,    18,    83,    83,    83,    66,    68,    83,    84,  -130,
-    -130,  -130,  -130,    85,   148,  -130,   285,  -130,    83,  -130,
-    -130,    53,  -130,  -130,  -130,   448,    80,   311,    83,    83,
-     234,    18,  -130,  -130,    96,    83,    83,    83,    83,    83,
-      83,    83,    83,    83,    83,    83,    83,    83,    83,    83,
-      94,    83,   199,  -130,   400,  -130,  -130,   334,   357,  -130,
-    -130,    91,   188,   400,   400,   420,   440,   139,   139,   139,
-     139,   139,   139,   448,   448,    95,    95,    80,  -130,   380,
-    -130,   260,     6,   188,   188,    11,  -130,  -130,    83,  -130,
-    -130,    71,  -130,    89,  -130,   188,   102,  -130,  -130
+      52,  -133,    11,     6,    58,    20,  -133,    52,     1,  -133,
+    -133,  -133,    36,    52,  -133,  -133,  -133,    19,  -133,    17,
+      -8,    30,    52,    15,    51,    96,  -133,    39,    71,    75,
+      80,  -133,    71,    85,    52,    52,    58,  -133,  -133,    71,
+      56,    64,    74,  -133,  -133,  -133,  -133,    16,    -1,     7,
+      72,  -133,  -133,  -133,    91,    83,  -133,    52,  -133,   107,
+    -133,    52,   171,   171,   171,    86,   100,   171,   116,  -133,
+    -133,  -133,  -133,   122,   120,  -133,   257,  -133,   171,  -133,
+    -133,    71,  -133,  -133,  -133,   175,    77,   283,   171,   171,
+     206,    52,  -133,  -133,   129,   171,   171,   171,   171,   171,
+     171,   171,   171,   171,   171,   171,   171,   171,   171,   171,
+     126,   171,   145,  -133,   372,  -133,  -133,   306,   329,  -133,
+    -133,   128,    16,   372,   372,   392,   412,   432,   432,   432,
+     432,   432,   432,   175,   175,   418,   418,    77,  -133,   352,
+    -133,   232,    13,    16,    16,    58,  -133,  -133,   171,  -133,
+    -133,   108,  -133,   130,  -133,    16,   134,  -133,  -133
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,9 +593,9 @@ static const yytype_uint8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -130,  -130,   105,  -130,    98,     3,    -4,  -130,  -130,    81,
-     -28,  -130,   -52,  -130,   -20,   -72,  -129,   -10,    54,    48,
-    -130,  -130,   -27,    74,   -18
+    -133,  -133,   135,  -133,   117,     2,    -4,  -133,  -133,   111,
+     -29,  -133,   -53,  -133,   -20,   -69,  -132,    -9,    79,    73,
+    -133,  -133,   -34,   104,    18
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -611,106 +611,102 @@ static const yytype_int16 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      14,    31,    93,     8,    48,    83,    37,   149,    78,    23,
-       8,    55,    33,    79,   151,   152,    29,    15,    17,    12,
-      27,    30,    13,    35,    52,    27,   157,    22,    39,    28,
-      26,    23,    54,    38,   150,    85,    86,    87,    36,   121,
-      90,     1,     2,     3,     4,    80,    18,     1,     2,     3,
-     146,   114,    25,    48,     1,     2,     3,     4,    43,    42,
-      39,   117,   118,    45,    51,    56,    57,    58,   123,   124,
-     125,   126,   127,   128,   129,   130,   131,   132,   133,   134,
-     135,   136,   137,    95,   139,   141,    59,    82,    60,    81,
-      27,    59,    92,    88,    39,    89,    91,   122,    95,   138,
-     145,   155,    62,   156,   110,   111,    63,   112,    61,    46,
-      64,   -43,    16,   -43,   -43,   -43,    53,   109,    68,   110,
-     111,   141,   112,    69,    70,    71,    44,   -43,    94,   115,
-     154,   -43,     0,    84,     0,   -43,   158,   -43,     0,   -43,
-     -43,   153,    95,   -43,     1,     2,     3,     4,   -43,   -43,
-     -43,    59,     0,    60,    61,     0,     0,   105,   106,   107,
-     108,   109,     0,   110,   111,     0,   112,    62,     0,     0,
-       0,    63,     0,     0,     0,    64,     0,    65,     0,    66,
-      67,     0,     0,    68,     1,     2,     3,     4,    69,    70,
-      71,    59,     0,    60,    61,     0,     0,     0,     0,     0,
-       0,     0,    59,     0,    60,     0,     0,    62,     0,     0,
-       0,    63,     0,     0,     0,    64,     0,    65,    62,    66,
-      67,     0,    63,    68,     0,     0,    64,   140,    69,    70,
-      71,     0,     0,     0,    68,   119,     0,    95,     0,    69,
-      70,    71,    96,     0,    97,    98,    99,   100,   101,   102,
-     103,   104,   105,   106,   107,   108,   109,     0,   110,   111,
-       0,   112,     0,    95,     0,     0,     0,   120,    96,     0,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,     0,   110,   111,     0,   112,    95,     0,
-       0,     0,     0,    96,   148,    97,    98,    99,   100,   101,
-     102,   103,   104,   105,   106,   107,   108,   109,     0,   110,
-     111,     0,   112,     0,    95,     0,     0,     0,   113,    96,
-       0,    97,    98,    99,   100,   101,   102,   103,   104,   105,
-     106,   107,   108,   109,     0,   110,   111,    95,   112,   116,
-       0,     0,    96,     0,    97,    98,    99,   100,   101,   102,
-     103,   104,   105,   106,   107,   108,   109,     0,   110,   111,
-      95,   112,   143,     0,     0,    96,     0,    97,    98,    99,
+      14,    31,     8,    48,    83,    93,    17,    78,    79,     8,
+      55,   151,   152,    33,   149,    23,    12,    27,    13,    59,
+      15,    60,    61,   157,    27,    52,    28,    39,    85,    86,
+      87,    29,    54,    90,    18,    62,    30,    23,   121,    63,
+      80,   150,    22,    64,   114,    65,    25,    66,    67,    35,
+      26,    68,    48,   146,   117,   118,    69,    70,    71,    39,
+      36,   123,   124,   125,   126,   127,   128,   129,   130,   131,
+     132,   133,   134,   135,   136,   137,    43,   139,   141,    42,
+      95,    46,    45,   -43,    56,   -43,   -43,   -43,     1,     2,
+       3,     4,    51,    39,     1,     2,     3,    37,    57,   -43,
+      58,   110,   111,   -43,   112,    82,    81,   -43,    27,   -43,
+      59,   -43,   -43,    88,   141,   -43,     1,     2,     3,     4,
+     -43,   -43,   -43,    59,    38,    60,    61,    89,    91,    92,
+     122,   138,     1,     2,     3,     4,   158,   145,   155,    62,
+      61,   153,    16,    63,   156,    44,    53,    64,    59,    65,
+      60,    66,    67,    94,   115,    68,     1,     2,     3,     4,
+      69,    70,    71,    84,    62,     0,   154,     0,    63,     0,
+       0,     0,    64,   140,    59,     0,    60,     0,    95,     0,
+      68,     0,     0,     0,     0,    69,    70,    71,     0,     0,
+      62,     0,     0,     0,    63,   107,   108,   109,    64,   110,
+     111,     0,   112,     0,     0,     0,    68,   119,     0,    95,
+       0,    69,    70,    71,    96,     0,    97,    98,    99,   100,
+     101,   102,   103,   104,   105,   106,   107,   108,   109,     0,
+     110,   111,     0,   112,     0,    95,     0,     0,     0,   120,
+      96,     0,    97,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,     0,   110,   111,     0,   112,
+      95,     0,     0,     0,     0,    96,   148,    97,    98,    99,
      100,   101,   102,   103,   104,   105,   106,   107,   108,   109,
-       0,   110,   111,    95,   112,   144,     0,     0,    96,     0,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,    95,   110,   111,   147,   112,    96,     0,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,    95,   110,   111,     0,   112,     0,     0,
-       0,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,    95,   110,   111,     0,   112,     0,     0,
-       0,    95,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,     0,   110,   111,     0,   112,   107,   108,
-     109,     0,   110,   111,     0,   112
+       0,   110,   111,     0,   112,     0,    95,     0,     0,     0,
+     113,    96,     0,    97,    98,    99,   100,   101,   102,   103,
+     104,   105,   106,   107,   108,   109,     0,   110,   111,    95,
+     112,   116,     0,     0,    96,     0,    97,    98,    99,   100,
+     101,   102,   103,   104,   105,   106,   107,   108,   109,     0,
+     110,   111,    95,   112,   143,     0,     0,    96,     0,    97,
+      98,    99,   100,   101,   102,   103,   104,   105,   106,   107,
+     108,   109,     0,   110,   111,    95,   112,   144,     0,     0,
+      96,     0,    97,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,    95,   110,   111,   147,   112,
+      96,     0,    97,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,    95,   110,   111,     0,   112,
+       0,     0,     0,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,    95,   110,   111,     0,   112,
+       0,    95,     0,     0,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,    95,   110,   111,     0,   112,
+     109,     0,   110,   111,     0,   112,     0,     0,     0,     0,
+     105,   106,   107,   108,   109,     0,   110,   111,     0,   112
 };
 
 static const yytype_int16 yycheck[] =
 {
-       4,    21,    74,     0,    32,    57,     1,     1,     8,    13,
-       7,    39,    22,     1,   143,   144,     1,     0,     5,     5,
-      25,     6,    12,    34,    34,    25,   155,     6,    25,    34,
-      33,    35,    36,    28,    28,    62,    63,    64,     9,    91,
-      67,    36,    37,    38,    39,    33,    33,    36,    37,    38,
-     122,    78,    27,    81,    36,    37,    38,    39,     5,    40,
-      57,    88,    89,     7,     7,    28,    34,    26,    95,    96,
-      97,    98,    99,   100,   101,   102,   103,   104,   105,   106,
-     107,   108,   109,     3,   111,   112,     3,    14,     5,    34,
-      25,     3,     7,    27,    91,    27,    12,     1,     3,     5,
-       9,    30,    19,    14,    24,    25,    23,    27,     6,     1,
-      27,     3,     7,     5,     6,     7,    35,    22,    35,    24,
-      25,   148,    27,    40,    41,    42,    28,    19,    74,    81,
-     148,    23,    -1,    59,    -1,    27,   156,    29,    -1,    31,
-      32,   145,     3,    35,    36,    37,    38,    39,    40,    41,
-      42,     3,    -1,     5,     6,    -1,    -1,    18,    19,    20,
-      21,    22,    -1,    24,    25,    -1,    27,    19,    -1,    -1,
-      -1,    23,    -1,    -1,    -1,    27,    -1,    29,    -1,    31,
-      32,    -1,    -1,    35,    36,    37,    38,    39,    40,    41,
-      42,     3,    -1,     5,     6,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,     3,    -1,     5,    -1,    -1,    19,    -1,    -1,
-      -1,    23,    -1,    -1,    -1,    27,    -1,    29,    19,    31,
-      32,    -1,    23,    35,    -1,    -1,    27,    28,    40,    41,
-      42,    -1,    -1,    -1,    35,     1,    -1,     3,    -1,    40,
-      41,    42,     8,    -1,    10,    11,    12,    13,    14,    15,
-      16,    17,    18,    19,    20,    21,    22,    -1,    24,    25,
-      -1,    27,    -1,     3,    -1,    -1,    -1,    33,     8,    -1,
-      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,    -1,    24,    25,    -1,    27,     3,    -1,
-      -1,    -1,    -1,     8,    34,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    -1,    24,
-      25,    -1,    27,    -1,     3,    -1,    -1,    -1,    33,     8,
-      -1,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      19,    20,    21,    22,    -1,    24,    25,     3,    27,    28,
-      -1,    -1,     8,    -1,    10,    11,    12,    13,    14,    15,
-      16,    17,    18,    19,    20,    21,    22,    -1,    24,    25,
-       3,    27,    28,    -1,    -1,     8,    -1,    10,    11,    12,
+       4,    21,     0,    32,    57,    74,     5,     8,     1,     7,
+      39,   143,   144,    22,     1,    13,     5,    25,    12,     3,
+       0,     5,     6,   155,    25,    34,    34,    25,    62,    63,
+      64,     1,    36,    67,    33,    19,     6,    35,    91,    23,
+      33,    28,     6,    27,    78,    29,    27,    31,    32,    34,
+      33,    35,    81,   122,    88,    89,    40,    41,    42,    57,
+       9,    95,    96,    97,    98,    99,   100,   101,   102,   103,
+     104,   105,   106,   107,   108,   109,     5,   111,   112,    40,
+       3,     1,     7,     3,    28,     5,     6,     7,    36,    37,
+      38,    39,     7,    91,    36,    37,    38,     1,    34,    19,
+      26,    24,    25,    23,    27,    14,    34,    27,    25,    29,
+       3,    31,    32,    27,   148,    35,    36,    37,    38,    39,
+      40,    41,    42,     3,    28,     5,     6,    27,    12,     7,
+       1,     5,    36,    37,    38,    39,   156,     9,    30,    19,
+       6,   145,     7,    23,    14,    28,    35,    27,     3,    29,
+       5,    31,    32,    74,    81,    35,    36,    37,    38,    39,
+      40,    41,    42,    59,    19,    -1,   148,    -1,    23,    -1,
+      -1,    -1,    27,    28,     3,    -1,     5,    -1,     3,    -1,
+      35,    -1,    -1,    -1,    -1,    40,    41,    42,    -1,    -1,
+      19,    -1,    -1,    -1,    23,    20,    21,    22,    27,    24,
+      25,    -1,    27,    -1,    -1,    -1,    35,     1,    -1,     3,
+      -1,    40,    41,    42,     8,    -1,    10,    11,    12,    13,
+      14,    15,    16,    17,    18,    19,    20,    21,    22,    -1,
+      24,    25,    -1,    27,    -1,     3,    -1,    -1,    -1,    33,
+       8,    -1,    10,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,    -1,    24,    25,    -1,    27,
+       3,    -1,    -1,    -1,    -1,     8,    34,    10,    11,    12,
       13,    14,    15,    16,    17,    18,    19,    20,    21,    22,
-      -1,    24,    25,     3,    27,    28,    -1,    -1,     8,    -1,
-      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,     3,    24,    25,    26,    27,     8,    -1,
-      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,     3,    24,    25,    -1,    27,    -1,    -1,
-      -1,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,     3,    24,    25,    -1,    27,    -1,    -1,
-      -1,     3,    12,    13,    14,    15,    16,    17,    18,    19,
-      20,    21,    22,    -1,    24,    25,    -1,    27,    20,    21,
-      22,    -1,    24,    25,    -1,    27
+      -1,    24,    25,    -1,    27,    -1,     3,    -1,    -1,    -1,
+      33,     8,    -1,    10,    11,    12,    13,    14,    15,    16,
+      17,    18,    19,    20,    21,    22,    -1,    24,    25,     3,
+      27,    28,    -1,    -1,     8,    -1,    10,    11,    12,    13,
+      14,    15,    16,    17,    18,    19,    20,    21,    22,    -1,
+      24,    25,     3,    27,    28,    -1,    -1,     8,    -1,    10,
+      11,    12,    13,    14,    15,    16,    17,    18,    19,    20,
+      21,    22,    -1,    24,    25,     3,    27,    28,    -1,    -1,
+       8,    -1,    10,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,     3,    24,    25,    26,    27,
+       8,    -1,    10,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,     3,    24,    25,    -1,    27,
+      -1,    -1,    -1,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,     3,    24,    25,    -1,    27,
+      -1,     3,    -1,    -1,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,     3,    24,    25,    -1,    27,
+      22,    -1,    24,    25,    -1,    27,    -1,    -1,    -1,    -1,
+      18,    19,    20,    21,    22,    -1,    24,    25,    -1,    27
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -719,7 +715,7 @@ static const yytype_uint8 yystos[] =
 {
        0,    36,    37,    38,    39,    44,    45,    46,    48,    49,
       50,    51,     5,    12,    49,     0,    45,     5,    33,    47,
-      53,    54,     6,    49,    52,    27,    33,    25,    34,     1,
+      53,    54,     6,    48,    52,    27,    33,    25,    34,     1,
        6,    57,    48,    60,    61,    34,     9,     1,    28,    48,
       55,    56,    40,     5,    47,     7,     1,    60,    53,    62,
       63,     7,    60,    52,    49,    53,    28,    34,    26,     3,
@@ -1532,497 +1528,497 @@ yyreduce:
         case 2:
 #line 46 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Program", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); parsingTree = (yyval); }
-#line 1536 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1532 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 48 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ExtDefList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1542 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1538 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 49 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = NULL; }
-#line 1548 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1544 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 51 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ExtDef", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1554 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1550 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 52 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ExtDef", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1560 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1556 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 53 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ExtDef", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1566 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1562 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 54 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing left brace\n"); }
-#line 1572 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1568 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 55 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing right brace\n"); }
-#line 1578 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1574 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 57 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ExtDecList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1584 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1580 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 58 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ExtDecList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1590 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1586 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 61 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("QualifiedSpecifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1596 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1592 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 62 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("QualifiedSpecifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1602 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1598 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 63 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Specifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1608 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1604 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 64 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Specifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1614 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1610 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 65 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Specifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1620 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1616 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 67 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("StructSpecifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 5, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1626 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1622 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 68 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("StructSpecifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1632 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1628 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 70 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("FunctionSpecifier", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 6, (yyvsp[-5]), (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1638 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1634 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 72 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
-    { (yyval) = createNode("SpecifierList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1644 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+    { (yyval) = createNode("QualifiedSpecifierList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
+#line 1640 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 73 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("SpecifierList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1650 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1646 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 74 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = NULL; }
-#line 1656 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1652 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 77 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("VarDec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1662 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1658 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 78 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("VarDec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 4, (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1668 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1664 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 80 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("FunDec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 4, (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1674 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1670 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
 #line 81 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("FunDec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1680 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1676 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 82 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing closing parenthesis \')\'\n"); }
-#line 1686 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1682 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 84 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("VarList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1692 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1688 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
 #line 85 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("VarList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1698 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1694 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 87 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("ParamDec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1704 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1700 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 90 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("CompSt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 4, (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1710 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1706 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 92 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("StmtList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1716 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1712 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 93 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing specifier\n"); }
-#line 1722 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1718 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 94 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = NULL; }
-#line 1728 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1724 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 96 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Stmt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1734 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1730 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 97 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Stmt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1740 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1736 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 98 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Stmt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1746 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1742 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 99 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Stmt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 5, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1752 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1748 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
 #line 100 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Stmt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 6, (yyvsp[-6]), (yyvsp[-5]), (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1])); }
-#line 1758 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1754 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
 #line 101 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Stmt", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 5, (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1764 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1760 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
 #line 102 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing semicolon \';\'\n"); }
-#line 1770 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1766 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
 #line 105 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("DefList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1776 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1772 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
 #line 106 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = NULL; }
-#line 1782 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1778 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 108 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Def", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1788 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1784 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 109 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing semicolon \';\'\n"); }
-#line 1794 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1790 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
 #line 111 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("DecList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1800 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1796 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 112 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("DecList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1806 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1802 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
 #line 114 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Dec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1812 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1808 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 115 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Dec", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1818 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1814 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 118 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("LambdaExp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 6, (yyvsp[-6]), (yyvsp[-5]), (yyvsp[-4]), (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1])); }
-#line 1824 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1820 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 120 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1830 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1826 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 121 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1836 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1832 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 122 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1842 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1838 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
 #line 123 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1848 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1844 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 124 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1854 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1850 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 125 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1860 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1856 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 126 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1866 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1862 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 127 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1872 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1868 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 128 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1878 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1874 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
 #line 129 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1884 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1880 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
 #line 130 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1890 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1886 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
 #line 131 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1896 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1892 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 132 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1902 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1898 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
 #line 133 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1908 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1904 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
 #line 134 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1914 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1910 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
 #line 135 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1920 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1916 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
 #line 136 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1926 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1922 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
 #line 137 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 1932 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1928 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
 #line 138 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 4, (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1938 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1934 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
 #line 139 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { fprintf(stderr, "Missing closing parenthesis \')\'\n"); }
-#line 1944 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1940 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
 #line 140 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1950 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1946 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
 #line 141 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 4, (yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1956 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1952 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
 #line 142 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 1962 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1958 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
 #line 143 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1968 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1964 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
 #line 144 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1974 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1970 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
 #line 145 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1980 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1976 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
 #line 146 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1986 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1982 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
 #line 147 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1992 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1988 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
 #line 148 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Exp", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 1998 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 1994 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
 #line 150 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("MysteriousLexemeList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 2004 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 2000 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
 #line 151 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("MysteriousLexemeList", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 2, (yyvsp[-1]), (yyvsp[0])); }
-#line 2010 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 2006 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
 #line 153 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Args", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 3, (yyvsp[-2]), (yyvsp[-1]), (yyvsp[0])); }
-#line 2016 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 2012 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
 #line 154 "/home/ubuntu/FSPL/debug_src/stage1/syntax.y" /* yacc.c:1646  */
     { (yyval) = createNode("Args", (yyloc).first_line, NTERM, unionNULL()); insertChildren((yyval), 1, (yyvsp[0])); }
-#line 2022 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 2018 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2026 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
+#line 2022 "/home/ubuntu/FSPL/build/stage1/syntax.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

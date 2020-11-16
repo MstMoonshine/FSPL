@@ -52,11 +52,11 @@ Grammar
    16 StructSpecifier: STRUCT ID LC DefList RC
    17                | STRUCT ID
 
-   18 FunctionSpecifier: FUNCTION LT SpecifierList RA Specifier GT
+   18 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA Specifier GT
 
-   19 SpecifierList: Specifier
-   20              | Specifier COMMA SpecifierList
-   21              | %empty
+   19 QualifiedSpecifierList: QualifiedSpecifier
+   20                       | QualifiedSpecifier COMMA QualifiedSpecifierList
+   21                       | %empty
 
    22 VarDec: ID
    23       | VarDec LB INT RB
@@ -194,14 +194,14 @@ ExtDef (46)
 ExtDecList (47)
     on left: 9 10, on right: 4 10
 QualifiedSpecifier (48)
-    on left: 11 12, on right: 4 5 6 7 8 29 43 44
+    on left: 11 12, on right: 4 5 6 7 8 19 20 29 43 44
 Specifier (49)
-    on left: 13 14 15, on right: 11 12 18 19 20 49
+    on left: 13 14 15, on right: 11 12 18 49
 StructSpecifier (50)
     on left: 16 17, on right: 14
 FunctionSpecifier (51)
     on left: 18, on right: 15
-SpecifierList (52)
+QualifiedSpecifierList (52)
     on left: 19 20 21, on right: 18 20
 VarDec (53)
     on left: 22 23, on right: 9 10 23 29 47 48
@@ -275,7 +275,7 @@ State 2
 
 State 3
 
-   18 FunctionSpecifier: FUNCTION . LT SpecifierList RA Specifier GT
+   18 FunctionSpecifier: FUNCTION . LT QualifiedSpecifierList RA Specifier GT
 
     LT  shift, and go to state 13
 
@@ -375,18 +375,20 @@ State 12
 
 State 13
 
-   18 FunctionSpecifier: FUNCTION LT . SpecifierList RA Specifier GT
+   18 FunctionSpecifier: FUNCTION LT . QualifiedSpecifierList RA Specifier GT
 
     TYPE      shift, and go to state 1
     STRUCT    shift, and go to state 2
     FUNCTION  shift, and go to state 3
+    CONST     shift, and go to state 4
 
-    $default  reduce using rule 21 (SpecifierList)
+    $default  reduce using rule 21 (QualifiedSpecifierList)
 
-    Specifier          go to state 23
-    StructSpecifier    go to state 10
-    FunctionSpecifier  go to state 11
-    SpecifierList      go to state 24
+    QualifiedSpecifier      go to state 23
+    Specifier               go to state 9
+    StructSpecifier         go to state 10
+    FunctionSpecifier       go to state 11
+    QualifiedSpecifierList  go to state 24
 
 
 State 14
@@ -481,17 +483,17 @@ State 22
 
 State 23
 
-   19 SpecifierList: Specifier .
-   20              | Specifier . COMMA SpecifierList
+   19 QualifiedSpecifierList: QualifiedSpecifier .
+   20                       | QualifiedSpecifier . COMMA QualifiedSpecifierList
 
     COMMA  shift, and go to state 35
 
-    $default  reduce using rule 19 (SpecifierList)
+    $default  reduce using rule 19 (QualifiedSpecifierList)
 
 
 State 24
 
-   18 FunctionSpecifier: FUNCTION LT SpecifierList . RA Specifier GT
+   18 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList . RA Specifier GT
 
     RA  shift, and go to state 36
 
@@ -629,23 +631,25 @@ State 34
 
 State 35
 
-   20 SpecifierList: Specifier COMMA . SpecifierList
+   20 QualifiedSpecifierList: QualifiedSpecifier COMMA . QualifiedSpecifierList
 
     TYPE      shift, and go to state 1
     STRUCT    shift, and go to state 2
     FUNCTION  shift, and go to state 3
+    CONST     shift, and go to state 4
 
-    $default  reduce using rule 21 (SpecifierList)
+    $default  reduce using rule 21 (QualifiedSpecifierList)
 
-    Specifier          go to state 23
-    StructSpecifier    go to state 10
-    FunctionSpecifier  go to state 11
-    SpecifierList      go to state 53
+    QualifiedSpecifier      go to state 23
+    Specifier               go to state 9
+    StructSpecifier         go to state 10
+    FunctionSpecifier       go to state 11
+    QualifiedSpecifierList  go to state 53
 
 
 State 36
 
-   18 FunctionSpecifier: FUNCTION LT SpecifierList RA . Specifier GT
+   18 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA . Specifier GT
 
     TYPE      shift, and go to state 1
     STRUCT    shift, and go to state 2
@@ -806,14 +810,14 @@ State 52
 
 State 53
 
-   20 SpecifierList: Specifier COMMA SpecifierList .
+   20 QualifiedSpecifierList: QualifiedSpecifier COMMA QualifiedSpecifierList .
 
-    $default  reduce using rule 20 (SpecifierList)
+    $default  reduce using rule 20 (QualifiedSpecifierList)
 
 
 State 54
 
-   18 FunctionSpecifier: FUNCTION LT SpecifierList RA Specifier . GT
+   18 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA Specifier . GT
 
     GT  shift, and go to state 82
 
@@ -1175,7 +1179,7 @@ State 81
 
 State 82
 
-   18 FunctionSpecifier: FUNCTION LT SpecifierList RA Specifier GT .
+   18 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA Specifier GT .
 
     $default  reduce using rule 18 (FunctionSpecifier)
 
