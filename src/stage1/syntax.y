@@ -189,13 +189,22 @@ int main(int argc, char **argv) {
 
         if (lexicalErrorExists || syntaxErrorExists) {
             remove(output_name);
+            fclose(err);
+
+            err = fopen("tempErr", "r");
+            char c;
+            while ((c = fgetc(err)) != EOF) putchar(c);
+            fclose(err);
+
+            remove("tempErr");
+            
         } else {
 			remove("tempErr");
+
             FILE *out = fopen(output_name, "r");
             char c;
-            while ((c = fgetc(out)) != EOF) {
-                putchar(c);
-            }
+            while ((c = fgetc(out)) != EOF) putchar(c);
+
             fclose(out);
         }
 
