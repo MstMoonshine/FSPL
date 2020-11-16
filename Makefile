@@ -3,7 +3,14 @@ LEX = flex
 SYN = bison
 AR = ar rcs
 
-CFLAGS = -I$(ENV_PATH)
+SYS = $(shell uname -s)
+CFLAGS = -I$(ENV_PATH) -g
+# Should never use bison on Mac... Use a virtual machine instead.
+ifeq ($(SYS), Linux)
+	CSYNFLAGS = -lfl -ly
+else ifeq ($(SYS), Darwin) 
+	CSYNFLAGS = -ll -ly
+endif
 LIBFLAGS = -L$(LIB_PATH) -l$(lib_name)
 LFLAGS = 
 SFLAGS = -d
@@ -42,6 +49,7 @@ all: initial $(target) final
 
 initial:
 	@echo "[*] Building environment..."
+	@echo "$(CSYNFLAGS)"
 	-@mkdir $(BLD_PATH) 2>/dev/null || true;
 	-@mkdir $(BIN_PATH) 2>/dev/null || true;
 	-@mkdir $(LIB_PATH) 2>/dev/null || true;
@@ -73,7 +81,7 @@ $(LIB_PATH)/$(lib_object): $(LIB_PATH)/%.o: $(LIB_SRC_PATH)/%.c
 
 #Stage 1
 $(STAGE_1_BLD_PATH)/$(STAGE_1).o: $(STAGE_1_BLD_PATH)/$(syn_file_name).c $(STAGE_1_BLD_PATH)/$(syn_file_name).h
-	$(CC) $(CFLAGS) -c $(STAGE_1_BLD_PATH)/$(syn_file_name).c -lfl -ly -o $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIBFLAGS);
+	$(CC) $(CFLAGS) -c $(STAGE_1_BLD_PATH)/$(syn_file_name).c $(CSYNFLAGS) -o $(STAGE_1_BLD_PATH)/$(STAGE_1).o $(LIBFLAGS);
 	@echo "[*] Stage 1 completed."
 
 $(STAGE_1_BLD_PATH)/$(syn_file_name).c: $(STAGE_1_SRC_PATH)/$(syn_src_file) $(STAGE_1_SRC_PATH)/$(lex_src_file)
