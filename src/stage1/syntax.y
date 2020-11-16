@@ -67,12 +67,12 @@ Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()
 StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
-FunctionSpecifier: FUNCTION LT SpecifierList RA Specifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
+FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA Specifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
                  ;
-SpecifierList: Specifier { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
-             | Specifier COMMA SpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-        | %empty { $$ = NULL; }
-        ;
+QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+                      | QualifiedSpecifier COMMA QualifiedSpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+                      | %empty { $$ = NULL; }
+                      ;
 
 VarDec: ID { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
