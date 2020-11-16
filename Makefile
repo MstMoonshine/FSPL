@@ -77,7 +77,7 @@ debug_initial:
 	$(eval SRC_PATH=$(DEB_SRC_PATH))
 	sed -i 's/main/normalMain/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
 	sed -i 's/debugMain/main/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
-#sed -i 's/yyparse();/yydebug=1;yyparse();/g' debug/syntax_debug.y
+	sed -i 's/yyparse();/yydebug=1;yyparse();/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
 
 
 #Static Library

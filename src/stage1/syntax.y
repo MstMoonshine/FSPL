@@ -171,7 +171,6 @@ int debugMain(int argc, char **argv) {
             return 1;
         }
 
-        yydebug = 1;
         yyparse();
 
         fclose(yyin);
@@ -219,7 +218,7 @@ int main(int argc, char **argv) {
         freopen("/dev/tty", "w", stderr);
 
         if (lexicalErrorExists || syntaxErrorExists) {
-            // remove(output_name);
+            remove(output_name);
             fclose(err);
 
             err = fopen("tempErr", "r");
@@ -227,10 +226,10 @@ int main(int argc, char **argv) {
             while ((c = fgetc(err)) != EOF) putchar(c);
             fclose(err);
 
-            // remove("tempErr");
+            remove("tempErr");
             
         } else {
-			// remove("tempErr");
+			remove("tempErr");
 
             FILE *out = fopen(output_name, "r");
             char c;
