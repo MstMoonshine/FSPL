@@ -1,1 +1,5 @@
-int;
+function <int, float, struct a -> int> func;
+
+struct b func(int a) {
+    printf('\x02');
+}

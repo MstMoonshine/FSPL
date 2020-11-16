@@ -67,7 +67,7 @@ final:
 	fi
 	
 #debug mode
-debug: debug_initial initial $(target) final
+debug: debug_initial initial $(target) final cleanDebug
 
 debug_initial:
 	@echo "[!] Entering debug mode:"
@@ -75,10 +75,13 @@ debug_initial:
 	-@cp -r $(SRC_PATH) $(DEB_SRC_PATH);
 	$(eval SFLAGS+=-v -t)
 	$(eval SRC_PATH=$(DEB_SRC_PATH))
-	sed -i 's/main/normalMain/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
-	sed -i 's/debugMain/main/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
-	sed -i 's/yyparse();/yydebug=1;yyparse();/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+	-@sed -i 's/main/normalMain/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+	-@sed -i 's/debugMain/main/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
+	-@sed -i 's/yyparse();/yydebug=1;yyparse();/g' $(STAGE_1_SRC_PATH)/$(syn_src_file)
 
+cleanDebug:
+	@echo "[*] Cleaning debug source file..."
+	-rm -rf $(DEB_SRC_PATH);
 
 #Static Library
 lib: $(LIB_PATH)/$(lib).a
@@ -108,4 +111,4 @@ clean:
 
 #Object files in $(OBJS) will be automatically removed.
 .INTERMEDIATE: $(OBJS)
-.PHONY: all initial final lib debug debug_initial clean
+.PHONY: all initial final lib debug debug_initial clean cleanDebug

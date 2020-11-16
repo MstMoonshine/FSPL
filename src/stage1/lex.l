@@ -43,6 +43,7 @@ DOT \.
 SEMI ;
 COMMA ,
 
+RA ->
 ASSIGN =
 
 LT <
@@ -80,7 +81,8 @@ RC \}
 {SEMI} { yylval = createNode("SEMI", yylineno, OTHERS, unionNULL()); return SEMI; }
 {COMMA} { yylval = createNode("COMMA", yylineno, OTHERS, unionNULL()); return COMMA; }
 {ASSIGN} { yylval = createNode("ASSIGN", yylineno, OTHERS, unionNULL()); return ASSIGN; }
-{LT} { yylval = createNode("LE", yylineno, OTHERS, unionNULL()); return LT; }
+{RA} { yylval = createNode("RA", yylineno, OTHERS, unionNULL()); return RA; }
+{LT} { yylval = createNode("LT", yylineno, OTHERS, unionNULL()); return LT; }
 {LE} { yylval = createNode("LE", yylineno, OTHERS, unionNULL()); return LE; }
 {GT} { yylval = createNode("GT", yylineno, OTHERS, unionNULL()); return GT; }
 {GE} { yylval = createNode("GE", yylineno, OTHERS, unionNULL()); return GE; }

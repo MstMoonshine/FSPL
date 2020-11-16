@@ -3,5 +3,58 @@ Program (1)
     ExtDef (1)
       QualifiedSpecifier (1)
         Specifier (1)
-          TYPE: int
+          FunctionSpecifier (1)
+            FUNCTION
+            LT
+            SpecifierList (1)
+              Specifier (1)
+                TYPE: int
+              COMMA
+              SpecifierList (1)
+                Specifier (1)
+                  TYPE: float
+                COMMA
+                SpecifierList (1)
+                  Specifier (1)
+                    StructSpecifier (1)
+                      STRUCT
+                      ID: a
+            RA
+            Specifier (1)
+              TYPE: int
+            GT
+      ExtDecList (1)
+        VarDec (1)
+          ID: func
       SEMI
+    ExtDefList (3)
+      ExtDef (3)
+        QualifiedSpecifier (3)
+          Specifier (3)
+            StructSpecifier (3)
+              STRUCT
+              ID: b
+        FunDec (3)
+          ID: func
+          LP
+          VarList (3)
+            ParamDec (3)
+              QualifiedSpecifier (3)
+                Specifier (3)
+                  TYPE: int
+              VarDec (3)
+                ID: a
+          RP
+        CompSt (3)
+          LC
+          StmtList (4)
+            Stmt (4)
+              Exp (4)
+                ID: printf
+                LP
+                Args (4)
+                  Exp (4)
+                    CHAR: '\x02'
+                RP
+              SEMI
+          RC

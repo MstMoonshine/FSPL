@@ -17,7 +17,7 @@
 %token ID
 %token LC RC
 
-%right ASSIGN
+%right ASSIGN RA
 %left OR
 %left AND
 %left LT LE GT GE EQ NE
@@ -61,9 +61,10 @@ Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()
 StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
-FunctionSpecifier: FUNCTION "<" SpecifierList "->" Specifier ">" ID { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 7, $1, $2, $3, $4, $5, $6, $7); }
+FunctionSpecifier: FUNCTION LT SpecifierList RA Specifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
                  ;
-SpecifierList: Specifier COMMA SpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+SpecifierList: Specifier { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+             | Specifier COMMA SpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
         | %empty { $$ = NULL; }
         ;
 
