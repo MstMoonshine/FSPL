@@ -42,16 +42,18 @@ Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL
 ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
           | %empty { $$ = NULL; }
           ;
-ExtDef: Specifier ExtDecList SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-      | Specifier SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
-      | Specifier FunDec CompSt { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-      | Specifier FunDec error RC { fprintf(stderr, "Missing left brace\n"); }
-      | Specifier FunDec LC error { fprintf(stderr, "Missing right brace\n"); } 
+ExtDef: QualifiedSpecifier ExtDecList SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+      | QualifiedSpecifier SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+      | QualifiedSpecifier FunDec CompSt { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+      | QualifiedSpecifier FunDec error RC { fprintf(stderr, "Missing left brace\n"); }
+      | QualifiedSpecifier FunDec LC error { fprintf(stderr, "Missing right brace\n"); } 
       ;
 ExtDecList: VarDec { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
           | VarDec COMMA ExtDecList { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
           ;
 
+QualifiedSpecifier: Specifier { $$ = createNode("QualifiedSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+                  | CONST Specifier { $$ = createNode("QualifiedSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
 Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          | StructSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          ;
@@ -69,7 +71,7 @@ FunDec: ID LP VarList RP { $$ = createNode("FunDec", @$.first_line, NTERM, union
 VarList: ParamDec COMMA VarList { $$ = createNode("VarList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
        | ParamDec { $$ = createNode("VarList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
        ;
-ParamDec: Specifier VarDec { $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+ParamDec: QualifiedSpecifier VarDec { $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
         ;
 
 CompSt: LC DefList StmtList RC { $$ = createNode("CompSt", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
@@ -90,8 +92,8 @@ Stmt: Exp SEMI { $$ = createNode("Stmt", @$.first_line, NTERM, unionNULL()); ins
 DefList: Def DefList { $$ = createNode("DefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
        | %empty { $$ = NULL; }
        ;
-Def: Specifier DecList SEMI { $$ = createNode("Def", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-   | Specifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); }
+Def: QualifiedSpecifier DecList SEMI { $$ = createNode("Def", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+   | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); }
    ;
 DecList: Dec { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
        | Dec COMMA DecList { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
