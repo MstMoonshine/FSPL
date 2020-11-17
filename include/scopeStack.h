@@ -10,6 +10,8 @@ typedef struct scopeStack
 } scopeStack;
 
 scopeStack *initStack(symbolTable *globalScope);
+entryValue *lookupGlobal(scopeStack *stack, const char *key);
+entryValue *lookupLocal(scopeStack *stack, const char *key);
 void pushScope(scopeStack *stack, symbolTable *scope);
 symbolTable *popScope(scopeStack *stack);
 

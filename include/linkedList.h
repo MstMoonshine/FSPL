@@ -10,6 +10,8 @@ typedef struct LinkedList {
 
 
 linkedList *initList(symbolTable *globalScope);
+entryValue *lookupList(linkedList *list, const char *key);
+entryValue *lookupLocalList(linkedList *list, const char *key);
 linkedList *insertAtHead(linkedList *list, symbolTable *scope);
 linkedList *removeAtHead(linkedList *list);
 

@@ -8,29 +8,47 @@ scopeStack *initStack(symbolTable *globalScope) {
 
     newStack->stackTop = newList;
 
-    printf("Initialized...\n");
-    printList(newStack->stackTop);
-
     return newStack;
 }
 
+entryValue *lookupGlobal(scopeStack *stack, const char *key) {
+    return lookupList(stack->stackTop, key);
+}
+
+entryValue *lookupLocal(scopeStack *stack, const char *key) {
+    return lookupLocalList(stack->stackTop, key);
+}
+
 void pushScope(scopeStack *stack, symbolTable *scope) {
+    // freopen("log.txt", "a", stdout);
+    // printf("Pushed...\n");
+    // printf("Before:\n");
+    // printList(stack->stackTop);
+
     stack->stackTop = insertAtHead(stack->stackTop, scope);
 
-    printf("Pushed...\n");
-    printList(stack->stackTop);
+    // printf("After:\n");
+    // printList(stack->stackTop);
+    // freopen("/dev/tty", "w", stdout);
 }
 
 symbolTable *popScope(scopeStack *stack) {
-    symbolTable *ret = stack->stackTop->symbt;
-
-    stack->stackTop = removeAtHead(stack->stackTop);
 
     // freopen("log.txt", "a", stdout);
-    printf("Popped...\n");
-    printList(stack->stackTop);
-    // freopen("/dev/tty", "w", stdout);
+    // printf("Popping:************************************\n");
+    // printf("Before:\n");
+    // printf("---------------------\n");
+    // printList(stack->stackTop);
 
+    symbolTable *ret = stack->stackTop->symbt;
+    // printf("After:\n");
+    // printf("---------------------\n");
+    stack->stackTop = removeAtHead(stack->stackTop);
+
+
+
+    // printList(stack->stackTop);
+    // freopen("/dev/tty", "w", stdout);
     return ret;
 }
 

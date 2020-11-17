@@ -56,6 +56,7 @@ notUpToDate:=false
 all: initial $(target) final
 
 initial:
+	# -@rm log.txt
 	@echo "[*] Building environment..."
 	-@mkdir $(BLD_PATH) 2>/dev/null || true;
 	-@mkdir $(BIN_PATH) 2>/dev/null || true;

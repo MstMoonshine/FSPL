@@ -1,4 +1,4 @@
-int h(int a){
+int function1(int a){
 	return a * 2;
 }
 
@@ -8,13 +8,18 @@ const function <struct a,
 
 int main() {
 
-	function <int -> float> f;
-	g = lambda <struct a b, int b, const struct c d-> int> {
-		a.value = b + c.number;
-		return a.value*b*2;
+	function <int -> float> hello2;
+	hello2 = lambda <struct a arg2, int arg3, const struct c arg1 -> int> {
+		int anotherHello;
+
+		int a = g;
+		float a = g;
+
+		arg1.value = arg2 + arg1.number;
+		return arg1.value*b*2;
 	};
 
-	f = g @ h;
+	hello = g @ function1;
 
-	print(lambda <int a -> int> {return a + 1;} @ h (3));
+	print(lambda <int a -> int> {return a + 1;} @ hello (3));
 }

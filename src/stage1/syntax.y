@@ -10,6 +10,8 @@
     int lineno = 0;
 
     tree *parsingTree;
+
+    int isInLambda = 0;
     
 %}
 
@@ -82,7 +84,7 @@ StructSpecifier: STRUCT ID LC DefList RC {
     $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 5, $1, $2, $3, $4, $5);
 
-    insert(stack->stackTop->symbt, createNodeEntry($2->name, createEntryValue(1)));
+    insert(stack->stackTop->symbt, createNodeEntry($2->name, createEntryValue(1)), yylineno);
 }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
@@ -97,12 +99,12 @@ VarDec: ID {
     $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 1, $1);
 
-    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)), yylineno);
 }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
 FunDec: ID LP { 
-    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)), yylineno);
     shouldMerge = 1;
     pushScope(stack, initTable());
     }
@@ -112,7 +114,7 @@ FunDec: ID LP {
     insertChildren($$, 4, $1, $2, $4, $5); 
     }
       | ID LP RP {
-    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)), yylineno);
 
     $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 3, $1, $2, $3);
@@ -152,7 +154,10 @@ DefList: Def DefList {
 
     shouldMerge = 0;
 }
-       | %empty { $$ = NULL; }
+       | %empty {
+    $$ = NULL;
+    shouldMerge = 0;
+}
        ;
 Def: QualifiedSpecifier DecList SEMI {
     $$ = createNode("Def", @$.first_line, NTERM, unionNULL());
@@ -167,9 +172,20 @@ Dec: VarDec { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertC
    | VarDec ASSIGN Exp { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    ;
 
-LambdaExp: LAMBDA LambdaDec CompSt { $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); } 
+LambdaExp: LAMBDA LambdaDec CompSt {
+    $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+    isInLambda = 0;
+} 
          ;
-LambdaDec: LT VarList RA Specifier GT { $$ = createNode("LambdaDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
+LambdaDec: LT {
+    shouldMerge = 1;
+    pushScope(stack, initTable());
+    isInLambda = 1;
+    } VarList RA Specifier GT {
+    $$ = createNode("LambdaDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 5, $1, $3, $4, $5, $6);
+}
 
 Exp: Exp ASSIGN Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp AND Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -195,7 +211,13 @@ Exp: Exp ASSIGN Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL());
    | Exp LB Exp RB { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
    | Exp DOT ID { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | LambdaExp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
-   | ID { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+   | ID {
+    entryValue *searchRes = (isInLambda ? lookupLocal(stack, $1->name) : lookupGlobal(stack, $1->name));
+    if (!searchRes) fprintf(stderr, "Error: Undefined identifier at line %d: %s\n", yylineno, $1->name);
+
+    $$ = createNode("Exp", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 1, $1);
+}
    | INT { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
    | FLOAT { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
    | CHAR { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }

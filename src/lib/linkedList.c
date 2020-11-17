@@ -11,6 +11,21 @@ linkedList *initList(symbolTable *globalScope) {
     return newList;
 }
 
+entryValue *lookupList(linkedList *list, const char *key) {
+    linkedList *cur;
+    for (cur = list; cur; cur = cur->outerScope) {
+        entryValue *res = lookup(cur->symbt, key);
+
+        if (res) return res;
+    }
+
+    return NULL;
+}
+
+entryValue *lookupLocalList(linkedList *list, const char *key) {
+    return lookup(list->symbt, key);
+}
+
 linkedList *insertAtHead(linkedList *list, symbolTable *scope) {
     linkedList *newHead = malloc(sizeof(linkedList));
 
