@@ -67,7 +67,7 @@ Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()
 StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
-FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA Specifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
+FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA QualifiedSpecifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
                  ;
 QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
                       | QualifiedSpecifier COMMA QualifiedSpecifierList { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
