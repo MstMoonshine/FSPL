@@ -68,8 +68,11 @@ Dec: VarDec
    | VarDec ASSIGN Exp
    ;
 
-LambdaExp: LAMBDA LT VarList RA QualifiedSpecifier GT CompSt                    *
+LambdaExp: LAMBDA LambdaDec CompSt                                              *
          ;
+LambdaDec: LT VarList RA QualifiedSpecifier GT                                  *
+         ;
+
 Exp: Exp ASSIGN Exp
    | Exp AND Exp
    | Exp OR Exp

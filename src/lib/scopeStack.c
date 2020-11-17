@@ -8,11 +8,17 @@ scopeStack *initStack(symbolTable *globalScope) {
 
     newStack->stackTop = newList;
 
+    printf("Initialized...\n");
+    printStack(newStack);
+
     return newStack;
 }
 
 void pushScope(scopeStack *stack, symbolTable *scope) {
     stack->stackTop = insertAtHead(stack->stackTop, scope);
+
+    printf("Pushed...\n");
+    printStack(stack);
 }
 
 symbolTable *popScope(scopeStack *stack) {
@@ -20,10 +26,15 @@ symbolTable *popScope(scopeStack *stack) {
 
     stack->stackTop = removeAtHead(stack->stackTop);
 
+    // freopen("log.txt", "a", stdout);
+    printf("Popped...\n");
+    printStack(stack);
+    // freopen("/dev/tty", "w", stdout);
+
     return ret;
 }
 
 
-void printStack(scopeStack stack) {
-    printList(stack.stackTop);
+void printStack(scopeStack *stack) {
+    printList(stack->stackTop);
 }

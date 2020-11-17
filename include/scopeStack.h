@@ -13,7 +13,7 @@ scopeStack *initStack(symbolTable *globalScope);
 void pushScope(scopeStack *stack, symbolTable *scope);
 symbolTable *popScope(scopeStack *stack);
 
-void printStack(scopeStack stack);
+void printStack(scopeStack *stack);
 
 
 #endif

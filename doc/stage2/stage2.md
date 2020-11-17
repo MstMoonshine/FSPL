@@ -15,27 +15,28 @@ Semantic analysis is a coherent combination of scope checking and type checking.
 - The CompSt of a lambda expression is not allowed to access variables (its environment) outside its own scope. Unless its environment has been made an attribute and GC is designed;
 
 ## Details
-There are essentially three possibilities for a scope:
-- global
-- CompSt as a function body
-- other CompSt
+There are a lot troubles here. It took me long to realize that the key is that things in `VarDec` sometime belongs to the scope before it and other times belongs to the one after.
 
-The first and the third cases are simple to handle. However, there are some subtlety in the second case: functions come along with parameters. To solve this issue, a IDBuffer is introduced, which is a global variable used as a templete for parameter IDs. The detailed algorithm is shown as follows:
-- (CompSt as a function body) On receiving token `LC`, create a new symbol table, push buffer contents into it and clear the buffer;
-- (CompSt as a function body) On reducing token `CompSt`, pop out the top scope; (note this is nearly the same as receiving `RC`. However, this is easier to pass values.)
-- (CompSt as a function body) On reducing `Def`, clear the buffer;
-- (CompSt as a function body) On reducing `VarDec` by `ID`, push `ID` into the buffer;
-- (global) On reducing `ExtDef`, push the buffer contents into the global scope and clear the buffer;
-- (global) On reducing `VarDec` by `ID`, push `ID` into the buffer; //not directly into the global scope since `VarDec` is used `VarList`
-- (global) On reducing `FunDec` by `ID ...`, push `ID` into the global scope; //not the buffer since the follow-up `VarList` and `CompSt` would spoil it
-- (global) On reducing `StructSpecifier` by `STRUCT ID ...`, push `ID` into the buffer;
-- (other CompSt) On receiving token `LC`, create a new symbol table and clear the buffer;
+So make an individual scope for `VarList` and merge it into the `DefList` of the following `CompSt`:
 
-keep thinking about the struct part
+For the function `CompSt`, make a global flag `shouldMerge`, which is set to 1 on reducing `VarList` and set back to 0 after merging. Create the new scope on recieving `LC` and merge on reducing `DefList`. Pop on reducing `RC`. For other `CompSt`, merging simply won't happen since the flag is always 0.
 
-
-So there are two global data structure defined:
- the scope stack and the buffer, both defined in `lex.l` and referred in `syntax.y`.
+The left problem is about separation of struct declaration and implementation:
+```
+struct a;
+float b;
+struct a{
+    int c;
+}
+```
+I shall ignore this first.
+Thus in the global scope, ID is pushed in the following rules:
+```
+VarDec -> ID
+StructSpecifier -> STRUCT ID LC DefList RC
+FunDec -> ID LP VarList RP
+FunDec -> ID LP RP
+```
 
 ### To Do List: (We are on stage 2: semantic analysis)
 - [x] Build BSTs as symbol tables;

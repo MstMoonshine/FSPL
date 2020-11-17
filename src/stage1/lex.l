@@ -22,7 +22,7 @@
             yycolno += yyleng;
 
     scopeStack *stack;
-    symbolTable *buffer;
+    int shouldMerge = 0;
 %}
 
 INT -?((0|[1-9][0-9]*)|(0(x|X)[1-9a-fA-F][0-9a-fA-F]*))
@@ -108,19 +108,18 @@ RC \}
 {LB} { yylval = createNode("LB", yylineno, OTHERS, unionNULL()); return LB; }
 {RB} { yylval = createNode("RB", yylineno, OTHERS, unionNULL()); return RB; }
 
-{LC} { 
+{LC} {
+    if(!shouldMerge) pushScope(stack, initTable());
+
     yylval = createNode("LC", yylineno, OTHERS, unionNULL());
-
-    symbolTable *newScope = initTable();
-    memcpy(newScope, buffer, sizeof(symbolTable));
-    pushScope(stack, newScope);
-
-    free(buffer);
-    buffer = initTable();
-
     return LC;
 }
-{RC} { yylval = createNode("RC", yylineno, OTHERS, unionNULL()); return RC; }
+{RC} {
+    popScope(stack);
+
+    yylval = createNode("RC", yylineno, OTHERS, unionNULL());
+    return RC;
+}
 
 {INT} { yylval = createNode("INT", yylineno, TYPE_INT, unionInt(atoi(yytext))); return INT; }
 {FLOAT} { yylval = createNode("FLOAT", yylineno, TYPE_FLOAT, unionFloat(atof(yytext))); return FLOAT; }

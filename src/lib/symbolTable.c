@@ -46,17 +46,17 @@ symbolTable *createTable(nodeEntry *newNode) {
     return newTable;
 }
 
-int insert(symbolTable *symtb, nodeEntry *newNode) {
+int insert(symbolTable *symbt, nodeEntry *newNode) {
     //Return 0 if success, otherwise 1;
 
     //empty table
-    if (!symtb->entry) {
-        symtb->entry = newNode;
+    if (!symbt->entry) {
+        symbt->entry = newNode;
         return 1;
     }
     
     //insertion
-    symbolTable *cur = symtb;
+    symbolTable *cur = symbt;
     while (1) {
         int cmp = strcmp(cur->entry->key, newNode->key);
         if (!cmp) { fprintf(stderr, "Error: Identifier %s has been declared before.", newNode->key); return 1; }
@@ -78,10 +78,10 @@ int insert(symbolTable *symtb, nodeEntry *newNode) {
     }
 }
 
-nodeEntry *lookup(symbolTable *symtb, const char *key) {
-    if (!symtb) return NULL; // empty table;
+nodeEntry *lookup(symbolTable *symbt, const char *key) {
+    if (!symbt) return NULL; // empty table;
 
-    symbolTable *cur = symtb;
+    symbolTable *cur = symbt;
     while (cur) {
         int cmp = strcmp(cur->entry->key, key);
 
@@ -93,24 +93,25 @@ nodeEntry *lookup(symbolTable *symtb, const char *key) {
     return NULL; // not found
 }
 
-void clearTable(symbolTable *symtb) {
-    if (!symtb) {
+void clearTable(symbolTable *symbt) {
+    if (!symbt) {
         return;
-    } else if (!symtb->left && !symtb->right) {
-        free(symtb);
+    } else if (!symbt->left && !symbt->right) {
+        free(symbt);
         return;
     }
 
-    clearTable(symtb->left);
-    clearTable(symtb->left);
+    clearTable(symbt->left);
+    clearTable(symbt->right);
 }
 
-void printTable(symbolTable *symtb, int level) {
-    if (!symtb) return;
+void printTable(symbolTable *symbt, int level) {
+    if (!symbt) { return; printf("Empty table.\n"); }
+    if (!symbt->entry) { printf("Empty entry.\n"); return; }
 
     for (int i = 0; i < level; i++) printf("  "); //indent
 
-    printf("%s: %d\n", symtb->entry->key, symtb->entry->value.a);
-    printTable(symtb->left, level + 1);
-    printTable(symtb->right, level + 1);
+    printf("%s: %d\n", symbt->entry->key, symbt->entry->value.a);
+    printTable(symbt->left, level + 1);
+    printTable(symbt->right, level + 1);
 }

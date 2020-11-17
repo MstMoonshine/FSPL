@@ -52,17 +52,14 @@ ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTE
 ExtDef: QualifiedSpecifier ExtDecList SEMI { 
     $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 3, $1, $2, $3);
-    clearTable(buffer); buffer = initTable();
 }
       | QualifiedSpecifier SEMI {
     $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 2, $1, $2);
-    clearTable(buffer); buffer = initTable();
 }
       | QualifiedSpecifier FunDec CompSt {
     $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 3, $1, $2, $3);
-    clearTable(buffer); buffer = initTable();
 }
       | QualifiedSpecifier FunDec error RC {
     fprintf(stderr, "Missing left brace\n");
@@ -81,7 +78,12 @@ Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()
          | StructSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          | FunctionSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          ;
-StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
+StructSpecifier: STRUCT ID LC DefList RC {
+    $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 5, $1, $2, $3, $4, $5);
+
+    insert(stack->stackTop->symbt, createNodeEntry($2->name, createEntryValue(1)));
+}
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
 FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA QualifiedSpecifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
@@ -95,25 +97,40 @@ VarDec: ID {
     $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 1, $1);
 
-    insert(buffer, createNodeEntry($1->name, createEntryValue(1)));
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
 }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
-FunDec: ID LP VarList RP { $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
-      | ID LP RP { $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+FunDec: ID LP { 
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+    shouldMerge = 1;
+    pushScope(stack, initTable());
+    }
+    VarList RP 
+    { 
+    $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 4, $1, $2, $3, $4); 
+    }
+      | ID LP RP {
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+
+    $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+}
       | ID LP error { fprintf(stderr, "Missing closing parenthesis \')\'\n"); }
       ;
 VarList: ParamDec COMMA VarList { $$ = createNode("VarList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
        | ParamDec { $$ = createNode("VarList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
        ;
-ParamDec: QualifiedSpecifier VarDec { $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+ParamDec: QualifiedSpecifier VarDec {
+    $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 2, $1, $2);
+}
         ;
 
 CompSt: LC DefList StmtList RC {
     $$ = createNode("CompSt", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 4, $1, $2, $3, $4);
-
-    popScope(stack);
 }
       ;
 StmtList: Stmt StmtList { $$ = createNode("StmtList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
@@ -129,13 +146,17 @@ Stmt: Exp SEMI { $$ = createNode("Stmt", @$.first_line, NTERM, unionNULL()); ins
     | RETURN Exp error { fprintf(stderr, "Missing semicolon \';\'\n"); }
     ;
 
-DefList: Def DefList { $$ = createNode("DefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+DefList: Def DefList {
+    $$ = createNode("DefList", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 2, $1, $2);
+
+    shouldMerge = 0;
+}
        | %empty { $$ = NULL; }
        ;
 Def: QualifiedSpecifier DecList SEMI {
     $$ = createNode("Def", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 3, $1, $2, $3);
-    clearTable(buffer); buffer = initTable();
 }
    | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); }
    ;
@@ -146,8 +167,10 @@ Dec: VarDec { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertC
    | VarDec ASSIGN Exp { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    ;
 
-LambdaExp: LAMBDA LT VarList RA Specifier GT CompSt { $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); } 
+LambdaExp: LAMBDA LambdaDec CompSt { $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); } 
          ;
+LambdaDec: LT VarList RA Specifier GT { $$ = createNode("LambdaDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
+
 Exp: Exp ASSIGN Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp AND Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp OR Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -201,7 +224,6 @@ int main(int argc, char **argv) {
     yyin = fopen(argv[1], "r");
 
     stack = initStack(initTable());
-    buffer = initTable();
     yyparse();
 
     printTree(parsingTree, 0);

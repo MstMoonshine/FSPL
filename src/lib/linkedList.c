@@ -1,5 +1,6 @@
 #include "include/linkedList.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 linkedList *initList(symbolTable *globalScope) {
     linkedList *newList = malloc(sizeof(linkedList));
@@ -30,8 +31,12 @@ linkedList *removeAtHead(linkedList *list) {
 void printList(linkedList *list) {
     if (!list) return;
 
-    for (linkedList *cur = list; cur; cur = cur->outerScope)
+    int i = 0;
+    for (linkedList *cur = list; cur; cur = cur->outerScope) {
+        printf("*********\n");
+        printf("Scope %d:\n", i++);
         printTable(cur->symbt, 0);
-    
+        printf("\n");
+    }
     return;
 }
