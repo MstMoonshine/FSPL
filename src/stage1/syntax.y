@@ -2,6 +2,7 @@
     #include "build/stage1/lex.yy.c"
     #include "include/io.h"
     #include "include/parsingTree.h"
+    #include "include/binarySearchTree.h"
 
     void yyerror(const char*);
     short syntaxErrorExists = 0;
@@ -161,6 +162,7 @@ void yyerror(const char *s) {
     fprintf(stderr, "Error Type B at Line %d: ", yylineno);
 }
 
+
 int main(int argc, char **argv) {
 
 // while (__AFL_LOOP(1000)) {
@@ -169,8 +171,6 @@ int main(int argc, char **argv) {
     yyin = fopen(argv[1], "r");
     yyparse();
     printTree(parsingTree, 0);
-
-    return 0;
 
 // } //End of AFL_LOOP
 
