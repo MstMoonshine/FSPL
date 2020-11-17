@@ -79,7 +79,7 @@ int insert(symbolTable *symbt, nodeEntry *newNode, int lineno) {
 }
 
 entryValue *lookup(symbolTable *symbt, const char *key) {
-    if (!symbt) return NULL; // empty table;
+    if (!symbt->entry) return NULL; // empty table;
 
     symbolTable *cur = symbt;
     while (cur) {
