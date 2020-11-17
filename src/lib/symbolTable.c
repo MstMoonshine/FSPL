@@ -48,6 +48,7 @@ symbolTable *createTable(nodeEntry *newNode) {
 
 int insert(symbolTable *symbt, nodeEntry *newNode, int lineno) {
     //Return 0 if success, otherwise 1;
+    if (!symbt) return 1;
 
     //empty table
     if (!symbt->entry) {
