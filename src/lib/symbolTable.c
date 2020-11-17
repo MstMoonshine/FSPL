@@ -26,10 +26,20 @@ nodeEntry *createNodeEntry(const char *key, entryValue value) {
 
 
 /* binarySearchTree */
-symbolTable *createTable() {
+symbolTable *initTable() {
     symbolTable *newTable = malloc(sizeof(symbolTable));
 
     newTable->entry = NULL;
+    newTable->left = NULL;
+    newTable->right = NULL;
+
+    return newTable;
+}
+
+symbolTable *createTable(nodeEntry *newNode) {
+    symbolTable *newTable = malloc(sizeof(symbolTable));
+
+    newTable->entry = newNode;
     newTable->left = NULL;
     newTable->right = NULL;
 
@@ -81,6 +91,18 @@ nodeEntry *lookup(symbolTable *symtb, const char *key) {
     }
 
     return NULL; // not found
+}
+
+void clearTable(symbolTable *symtb) {
+    if (!symtb) {
+        return;
+    } else if (!symtb->left && !symtb->right) {
+        free(symtb);
+        return;
+    }
+
+    clearTable(symtb->left);
+    clearTable(symtb->left);
 }
 
 void printTable(symbolTable *symtb, int level) {

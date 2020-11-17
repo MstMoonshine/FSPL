@@ -111,12 +111,12 @@ RC \}
 {LC} { 
     yylval = createNode("LC", yylineno, OTHERS, unionNULL());
 
-    symbolTable *newScope = createTable();
+    symbolTable *newScope = initTable();
     memcpy(newScope, buffer, sizeof(symbolTable));
     pushScope(stack, newScope);
 
     free(buffer);
-    buffer = createTable();
+    buffer = initTable();
 
     return LC;
 }

@@ -49,11 +49,27 @@ Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL
 ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
           | %empty { $$ = NULL; }
           ;
-ExtDef: QualifiedSpecifier ExtDecList SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); free(buffer); buffer = createTable(); }
-      | QualifiedSpecifier SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); free(buffer); buffer = createTable(); }
-      | QualifiedSpecifier FunDec CompSt { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); free(buffer); buffer = createTable(); }
-      | QualifiedSpecifier FunDec error RC { fprintf(stderr, "Missing left brace\n"); free(buffer); buffer = createTable(); }
-      | QualifiedSpecifier FunDec LC error { fprintf(stderr, "Missing right brace\n"); free(buffer); buffer = createTable(); } 
+ExtDef: QualifiedSpecifier ExtDecList SEMI { 
+    $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+    clearTable(buffer); buffer = initTable();
+}
+      | QualifiedSpecifier SEMI {
+    $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 2, $1, $2);
+    clearTable(buffer); buffer = initTable();
+}
+      | QualifiedSpecifier FunDec CompSt {
+    $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+    clearTable(buffer); buffer = initTable();
+}
+      | QualifiedSpecifier FunDec error RC {
+    fprintf(stderr, "Missing left brace\n");
+}
+      | QualifiedSpecifier FunDec LC error {
+    fprintf(stderr, "Missing right brace\n");
+} 
       ;
 ExtDecList: VarDec { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
           | VarDec COMMA ExtDecList { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -75,7 +91,12 @@ QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifier
                       | %empty { $$ = NULL; }
                       ;
 
-VarDec: ID { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); insert(buffer, createNodeEntry($1->name, createEntryValue(1))); }
+VarDec: ID {
+    $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 1, $1);
+
+    insert(buffer, createNodeEntry($1->name, createEntryValue(1)));
+}
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
 FunDec: ID LP VarList RP { $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
@@ -111,8 +132,12 @@ Stmt: Exp SEMI { $$ = createNode("Stmt", @$.first_line, NTERM, unionNULL()); ins
 DefList: Def DefList { $$ = createNode("DefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
        | %empty { $$ = NULL; }
        ;
-Def: QualifiedSpecifier DecList SEMI { $$ = createNode("Def", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); free(buffer); buffer = createTable(); }
-   | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); free(buffer); buffer = createTable(); }
+Def: QualifiedSpecifier DecList SEMI {
+    $$ = createNode("Def", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+    clearTable(buffer); buffer = initTable();
+}
+   | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); }
    ;
 DecList: Dec { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
        | Dec COMMA DecList { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -175,8 +200,8 @@ int main(int argc, char **argv) {
     if (!check_file_path_legal(argc, argv)) return 1;
     yyin = fopen(argv[1], "r");
 
-    stack = initStack(createTable());
-    buffer = createTable();
+    stack = initStack(initTable());
+    buffer = initTable();
     yyparse();
 
     printTree(parsingTree, 0);
