@@ -1,5 +1,4 @@
 #include "include/scopeStack.h"
-#include "include/symbolTable.h"
 #include <stdio.h>
 
 /* RUN THIS:
@@ -11,18 +10,18 @@ int main() {
     symbolTable *table2 = createTable(createNodeEntry("ID2", createEntryValue(2)));
     symbolTable *table3 = createTable(createNodeEntry("ID3", createEntryValue(3)));
 
-    scopeStack stack = createScope(table1);
+    scopeStack *stack = initStack(table1);
     pushScope(stack, table2);
     pushScope(stack, table3);
 
-
-    printf("initial:\n");
-    printStack(stack);
+    printf("********\n");
+    printStack(*stack);
+    printf("********\n");
 
     popScope(stack);
-    printf("after pop:\n");
-    printStack(stack);
 
-    printf("**********\n");
-    printTable(stack.outerScope->scopeTable, 0);
+    printf("********\n");
+    printStack(*stack);
+    printf("********\n");
+
 }
