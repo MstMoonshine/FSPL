@@ -3,4 +3,4 @@
 A compiler project for Functional SUSTech Programming Language.
 
 Issues:
-- Why is `Specifier SEMI` allowed?
+- Should lambda expressions be left or right associative?
