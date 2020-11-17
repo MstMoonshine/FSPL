@@ -22,9 +22,10 @@ There are essentially three possibilities for a scope:
 
 The first and the third cases are simple to handle. However, there are some subtlety in the second case: functions come along with parameters. To solve this issue, a IDBuffer is introduced, which is a global variable used as a templete for parameter IDs. The detailed algorithm is shown as follows:
 - On receiving token `LC`, create a new symbol table, push buffer contents into it and clear the buffer;
-- On receiving token `RC`, pop out the top scope;
+- On reducing token `CompSt`, pop out the top scope; (note this is nearly the same as receiving `RC`. However, this is easier to pass values.)
 - On reducing `Def` or `ExtDef`, clear the buffer;
 - On reducing `VarDec` by `ID`, push `ID` into the buffer.
+- Deal with normal IDs. (How?)
 
 So there are two global data structure defined:
  the scope stack and the buffer, both defined in `lex.l` and referred in `syntax.y`.

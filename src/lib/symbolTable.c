@@ -26,10 +26,10 @@ nodeEntry *createNodeEntry(const char *key, entryValue value) {
 
 
 /* binarySearchTree */
-symbolTable *createTable(nodeEntry *newNode) {
+symbolTable *createTable() {
     symbolTable *newTable = malloc(sizeof(symbolTable));
 
-    newTable->entry = newNode;
+    newTable->entry = NULL;
     newTable->left = NULL;
     newTable->right = NULL;
 
@@ -40,9 +40,9 @@ int insert(symbolTable *symtb, nodeEntry *newNode) {
     //Return 0 if success, otherwise 1;
 
     //empty table
-    if (!symtb) {
-        symtb = createTable(newNode);
-        return 0;
+    if (!symtb->entry) {
+        symtb->entry = newNode;
+        return 1;
     }
     
     //insertion

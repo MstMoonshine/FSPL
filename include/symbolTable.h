@@ -28,7 +28,7 @@ entryValue createEntryValue(int a);
 nodeEntry *createNodeEntry(const char *key, entryValue value);
 
 /* binarySearchTree */
-symbolTable *createTable(nodeEntry *newNode);
+symbolTable *createTable();
 int insert(symbolTable *symtb, nodeEntry *newNode); //Return 0 if success, otherwise 1;
 nodeEntry *lookup(symbolTable *symtb, const char *key);
 void printTable(symbolTable *symtb, int level); //level is for recursion. set to 0 if used;

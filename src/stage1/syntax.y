@@ -2,6 +2,7 @@
     #include "build/stage1/lex.yy.c"
     #include "include/io.h"
     #include "include/parsingTree.h"
+    #include "include/scopeStack.h"
 
     void yyerror(const char*);
     short syntaxErrorExists = 0;
@@ -48,11 +49,11 @@ Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL
 ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
           | %empty { $$ = NULL; }
           ;
-ExtDef: QualifiedSpecifier ExtDecList SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-      | QualifiedSpecifier SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
-      | QualifiedSpecifier FunDec CompSt { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-      | QualifiedSpecifier FunDec error RC { fprintf(stderr, "Missing left brace\n"); }
-      | QualifiedSpecifier FunDec LC error { fprintf(stderr, "Missing right brace\n"); } 
+ExtDef: QualifiedSpecifier ExtDecList SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); free(buffer); buffer = createTable(); }
+      | QualifiedSpecifier SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); free(buffer); buffer = createTable(); }
+      | QualifiedSpecifier FunDec CompSt { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); free(buffer); buffer = createTable(); }
+      | QualifiedSpecifier FunDec error RC { fprintf(stderr, "Missing left brace\n"); free(buffer); buffer = createTable(); }
+      | QualifiedSpecifier FunDec LC error { fprintf(stderr, "Missing right brace\n"); free(buffer); buffer = createTable(); } 
       ;
 ExtDecList: VarDec { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
           | VarDec COMMA ExtDecList { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -74,7 +75,7 @@ QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifier
                       | %empty { $$ = NULL; }
                       ;
 
-VarDec: ID { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+VarDec: ID { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); insert(buffer, createNodeEntry($1->name, createEntryValue(1))); }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
 FunDec: ID LP VarList RP { $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
@@ -87,7 +88,12 @@ VarList: ParamDec COMMA VarList { $$ = createNode("VarList", @$.first_line, NTER
 ParamDec: QualifiedSpecifier VarDec { $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
         ;
 
-CompSt: LC DefList StmtList RC { $$ = createNode("CompSt", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
+CompSt: LC DefList StmtList RC {
+    $$ = createNode("CompSt", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 4, $1, $2, $3, $4);
+
+    popScope(stack);
+}
       ;
 StmtList: Stmt StmtList { $$ = createNode("StmtList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
         | Stmt Def error StmtList { fprintf(stderr, "Missing specifier\n"); }
@@ -105,8 +111,8 @@ Stmt: Exp SEMI { $$ = createNode("Stmt", @$.first_line, NTERM, unionNULL()); ins
 DefList: Def DefList { $$ = createNode("DefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
        | %empty { $$ = NULL; }
        ;
-Def: QualifiedSpecifier DecList SEMI { $$ = createNode("Def", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-   | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); }
+Def: QualifiedSpecifier DecList SEMI { $$ = createNode("Def", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); free(buffer); buffer = createTable(); }
+   | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); free(buffer); buffer = createTable(); }
    ;
 DecList: Dec { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
        | Dec COMMA DecList { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -168,7 +174,11 @@ int main(int argc, char **argv) {
     
     if (!check_file_path_legal(argc, argv)) return 1;
     yyin = fopen(argv[1], "r");
+
+    stack = initStack(createTable());
+    buffer = createTable();
     yyparse();
+
     printTree(parsingTree, 0);
 
 // } //End of AFL_LOOP

@@ -7,6 +7,7 @@
     #include "include/parsingTree.h"
     #include "include/symbolTable.h"
     #include "include/scopeStack.h"
+    #include <string.h>
 
     short lexicalErrorExists = 0;
     void lexErrorHandler();
@@ -20,8 +21,8 @@
             yylloc.last_column = yycolno + yyleng; \
             yycolno += yyleng;
 
-    scopeStack stack;
-    symbolTable buffer;
+    scopeStack *stack;
+    symbolTable *buffer;
 %}
 
 INT -?((0|[1-9][0-9]*)|(0(x|X)[1-9a-fA-F][0-9a-fA-F]*))
@@ -107,7 +108,18 @@ RC \}
 {LB} { yylval = createNode("LB", yylineno, OTHERS, unionNULL()); return LB; }
 {RB} { yylval = createNode("RB", yylineno, OTHERS, unionNULL()); return RB; }
 
-{LC} { yylval = createNode("LC", yylineno, OTHERS, unionNULL()); return LC; }
+{LC} { 
+    yylval = createNode("LC", yylineno, OTHERS, unionNULL());
+
+    symbolTable *newScope = createTable();
+    memcpy(newScope, buffer, sizeof(symbolTable));
+    pushScope(stack, newScope);
+
+    free(buffer);
+    buffer = createTable();
+
+    return LC;
+}
 {RC} { yylval = createNode("RC", yylineno, OTHERS, unionNULL()); return RC; }
 
 {INT} { yylval = createNode("INT", yylineno, TYPE_INT, unionInt(atoi(yytext))); return INT; }
@@ -115,16 +127,16 @@ RC \}
 {HEXCHAR} { yylval = createNode("CHAR", yylineno, TYPE_HEXCHAR, unionChar((char)strtol(yytext+3, NULL, 16))); return CHAR; }
 {CHAR} { yylval = createNode("CHAR", yylineno, TYPE_CHAR, unionChar(yytext[1])); return CHAR; }
 {ID} {
-        if (strlen(yytext) > 32) {
-            lexErrorHandler();
-            fprintf(stderr, "Id name too long: %s\n", yytext);
-        }
-        char id[33];
-        strncpy(id, yytext, 32);
-        id[32] = '\x0';
-        yylval = createNode(id, yylineno, TYPE_ID, unionNULL());
-        return ID;
-     }
+    if (strlen(yytext) > 32) {
+        lexErrorHandler();
+        fprintf(stderr, "Id name too long: %s\n", yytext);
+    }
+    char id[33];
+    strncpy(id, yytext, 32);
+    id[32] = '\x0';
+    yylval = createNode(id, yylineno, TYPE_ID, unionNULL());
+    return ID;
+}
 
 [ \t] {}
 "\n" { yycolno = 1; }
