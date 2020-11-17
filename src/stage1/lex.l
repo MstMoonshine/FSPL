@@ -6,6 +6,7 @@
     #include "build/stage1/syntax.tab.h"
     #include "include/parsingTree.h"
     #include "include/symbolTable.h"
+    #include "include/scopeStack.h"
 
     short lexicalErrorExists = 0;
     void lexErrorHandler();
@@ -19,7 +20,8 @@
             yylloc.last_column = yycolno + yyleng; \
             yycolno += yyleng;
 
-//Note that the length of ID should not exceed 32.
+    scopeStack stack;
+    symbolTable buffer;
 %}
 
 INT -?((0|[1-9][0-9]*)|(0(x|X)[1-9a-fA-F][0-9a-fA-F]*))

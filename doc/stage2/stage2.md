@@ -2,7 +2,7 @@
 
 Semantic analysis is a coherent combination of scope checking and type checking. Scope checking is the process during which we examinate whether there are conflictions caused by repeated IDs and at the same time we generate a symbol table for each scope. While type checking is to check whether the types of variables in an expression are compatible.
 
-## Type Checking
+## Scope Checking
 
 #### Tasks:
 - no undefined variables
@@ -13,6 +13,21 @@ Semantic analysis is a coherent combination of scope checking and type checking.
 - There is a global scope correspondes to no CompSt;
 - The scope of a function body should include its arguments;
 - The CompSt of a lambda expression is not allowed to access variables (its environment) outside its own scope. Unless its environment has been made an attribute and GC is designed;
+
+## Details
+There are essentially three possibilities for a scope:
+- global
+- CompSt as a function body
+- other CompSt
+
+The first and the third cases are simple to handle. However, there are some subtlety in the second case: functions come along with parameters. To solve this issue, a IDBuffer is introduced, which is a global variable used as a templete for parameter IDs. The detailed algorithm is shown as follows:
+- On receiving token `LC`, create a new symbol table, push buffer contents into it and clear the buffer;
+- On receiving token `RC`, pop out the top scope;
+- On reducing `Def` or `ExtDef`, clear the buffer;
+- On reducing `VarDec` by `ID`, push `ID` into the buffer.
+
+So there are two global data structure defined:
+ the scope stack and the buffer, both defined in `lex.l` and referred in `syntax.y`.
 
 ### To Do List: (We are on stage 2: semantic analysis)
 - [x] Build BSTs as symbol tables;
