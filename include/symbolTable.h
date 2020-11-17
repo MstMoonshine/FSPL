@@ -1,5 +1,5 @@
-#ifndef BINARYSEARCHTREE_H
-#define BINARYSEARCHTREE_H
+#ifndef SYMBOLTABLE_H
+#define SYMBOLTABLE_H
 
 typedef struct entryValue
 {

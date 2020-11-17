@@ -5,6 +5,7 @@
 
     #include "build/stage1/syntax.tab.h"
     #include "include/parsingTree.h"
+    #include "include/symbolTable.h"
 
     short lexicalErrorExists = 0;
     void lexErrorHandler();
@@ -103,6 +104,7 @@ RC \}
 {RP} { yylval = createNode("RP", yylineno, OTHERS, unionNULL()); return RP; }
 {LB} { yylval = createNode("LB", yylineno, OTHERS, unionNULL()); return LB; }
 {RB} { yylval = createNode("RB", yylineno, OTHERS, unionNULL()); return RB; }
+
 {LC} { yylval = createNode("LC", yylineno, OTHERS, unionNULL()); return LC; }
 {RC} { yylval = createNode("RC", yylineno, OTHERS, unionNULL()); return RC; }
 

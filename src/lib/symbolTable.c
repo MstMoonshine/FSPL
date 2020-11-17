@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "include/binarySearchTree.h"
+#include "include/symbolTable.h"
 
 
 /*
@@ -88,7 +88,7 @@ void printTable(symbolTable *symtb, int level) {
 
     for (int i = 0; i < level; i++) printf("  "); //indent
 
-    printf("%s: %d\n", symtb->entry->key, symtb->entry->value);
+    printf("%s: %d\n", symtb->entry->key, symtb->entry->value.a);
     printTable(symtb->left, level + 1);
     printTable(symtb->right, level + 1);
 }

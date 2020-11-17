@@ -2,7 +2,6 @@
     #include "build/stage1/lex.yy.c"
     #include "include/io.h"
     #include "include/parsingTree.h"
-    #include "include/binarySearchTree.h"
 
     void yyerror(const char*);
     short syntaxErrorExists = 0;
