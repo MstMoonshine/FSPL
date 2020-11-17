@@ -13,3 +13,9 @@ Semantic analysis is a coherent combination of scope checking and type checking.
 - There is a global scope correspondes to no CompSt;
 - The scope of a function body should include its arguments;
 - The CompSt of a lambda expression is not allowed to access variables (its environment) outside its own scope. Unless its environment has been made an attribute and GC is designed;
+
+### To Do List: (We are on stage 2: semantic analysis)
+- [x] Build BSTs as symbol tables;
+- Build scope stack consists of symbol tables;
+- Scope checking;
+- Typechecking (details to be determined);

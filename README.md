@@ -8,10 +8,10 @@ A compiler project for Functional SUSTech Programming Language.
 - `void` not allowed?
 - Should composition be set to left or right associative?
 
-### To Do List: (We are on stage 2: semantic analysis)
-- [x] Build BSTs as symbol tables;
-- Build scope stack consists of symbol tables to do scope checking;
-- Typechecking (details to be determined);
+## REMARKS
+There are two significant kinds of data to be processed: Identifiers and Expressions.
+
+The issues related to IDs are dissolved via generating symbol tables while the exprssion parts is to deal with an abstact syntax tree.
 
 ### Addtional Features
 - $Hom(Type A, Type B)$ type defined as a macro;
