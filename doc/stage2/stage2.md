@@ -21,11 +21,18 @@ There are essentially three possibilities for a scope:
 - other CompSt
 
 The first and the third cases are simple to handle. However, there are some subtlety in the second case: functions come along with parameters. To solve this issue, a IDBuffer is introduced, which is a global variable used as a templete for parameter IDs. The detailed algorithm is shown as follows:
-- On receiving token `LC`, create a new symbol table, push buffer contents into it and clear the buffer;
-- On reducing token `CompSt`, pop out the top scope; (note this is nearly the same as receiving `RC`. However, this is easier to pass values.)
-- On reducing `Def` or `ExtDef`, clear the buffer;
-- On reducing `VarDec` by `ID`, push `ID` into the buffer.
-- Deal with normal IDs. (How?)
+- (CompSt as a function body) On receiving token `LC`, create a new symbol table, push buffer contents into it and clear the buffer;
+- (CompSt as a function body) On reducing token `CompSt`, pop out the top scope; (note this is nearly the same as receiving `RC`. However, this is easier to pass values.)
+- (CompSt as a function body) On reducing `Def`, clear the buffer;
+- (CompSt as a function body) On reducing `VarDec` by `ID`, push `ID` into the buffer;
+- (global) On reducing `ExtDef`, push the buffer contents into the global scope and clear the buffer;
+- (global) On reducing `VarDec` by `ID`, push `ID` into the buffer; //not directly into the global scope since `VarDec` is used `VarList`
+- (global) On reducing `FunDec` by `ID ...`, push `ID` into the global scope; //not the buffer since the follow-up `VarList` and `CompSt` would spoil it
+- (global) On reducing `StructSpecifier` by `STRUCT ID ...`, push `ID` into the buffer;
+- (other CompSt) On receiving token `LC`, create a new symbol table and clear the buffer;
+
+keep thinking about the struct part
+
 
 So there are two global data structure defined:
  the scope stack and the buffer, both defined in `lex.l` and referred in `syntax.y`.

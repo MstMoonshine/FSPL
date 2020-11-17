@@ -59,7 +59,7 @@ int insert(symbolTable *symtb, nodeEntry *newNode) {
     symbolTable *cur = symtb;
     while (1) {
         int cmp = strcmp(cur->entry->key, newNode->key);
-        if (!cmp) return 1;
+        if (!cmp) { fprintf(stderr, "Error: Identifier %s has been declared before.", newNode->key); return 1; }
 
         if (cmp < 0) { // cur < key: key goes right
             if (cur->right) cur = cur->right; 
