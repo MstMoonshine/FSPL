@@ -109,7 +109,7 @@ FunDec: ID LP {
     VarList RP 
     { 
     $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
-    insertChildren($$, 4, $1, $2, $3, $4); 
+    insertChildren($$, 4, $1, $2, $4, $5); 
     }
       | ID LP RP {
     insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
