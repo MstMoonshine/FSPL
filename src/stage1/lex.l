@@ -5,6 +5,9 @@
 
     #include "build/stage1/syntax.tab.h"
     #include "include/parsingTree.h"
+    #include "include/symbolTable.h"
+    #include "include/scopeStack.h"
+    #include <string.h>
 
     short lexicalErrorExists = 0;
     void lexErrorHandler();
@@ -18,7 +21,8 @@
             yylloc.last_column = yycolno + yyleng; \
             yycolno += yyleng;
 
-//Note that the length of ID should not exceed 32.
+    scopeStack *stack;
+    int shouldMerge = 0;
 %}
 
 INT -?((0|[1-9][0-9]*)|(0(x|X)[1-9a-fA-F][0-9a-fA-F]*))
@@ -103,21 +107,35 @@ RC \}
 {RP} { yylval = createNode("RP", yylineno, OTHERS, unionNULL()); return RP; }
 {LB} { yylval = createNode("LB", yylineno, OTHERS, unionNULL()); return LB; }
 {RB} { yylval = createNode("RB", yylineno, OTHERS, unionNULL()); return RB; }
-{LC} { yylval = createNode("LC", yylineno, OTHERS, unionNULL()); return LC; }
-{RC} { yylval = createNode("RC", yylineno, OTHERS, unionNULL()); return RC; }
+
+{LC} {
+    if(!shouldMerge) pushScope(stack, initTable());
+
+    yylval = createNode("LC", yylineno, OTHERS, unionNULL());
+    return LC;
+}
+{RC} {
+    popScope(stack);
+
+    yylval = createNode("RC", yylineno, OTHERS, unionNULL());
+    return RC;
+}
 
 {INT} { yylval = createNode("INT", yylineno, TYPE_INT, unionInt(atoi(yytext))); return INT; }
 {FLOAT} { yylval = createNode("FLOAT", yylineno, TYPE_FLOAT, unionFloat(atof(yytext))); return FLOAT; }
 {HEXCHAR} { yylval = createNode("CHAR", yylineno, TYPE_HEXCHAR, unionChar((char)strtol(yytext+3, NULL, 16))); return CHAR; }
 {CHAR} { yylval = createNode("CHAR", yylineno, TYPE_CHAR, unionChar(yytext[1])); return CHAR; }
 {ID} {
-        if (strlen(yytext) > 32) {
-            lexErrorHandler();
-            fprintf(stderr, "Id name too long: %s\n", yytext);
-        }
-        yylval = createNode(yytext, yylineno, TYPE_ID, unionNULL());
-        return ID;
-     }
+    if (strlen(yytext) > 32) {
+        lexErrorHandler();
+        fprintf(stderr, "Id name too long: %s\n", yytext);
+    }
+    char id[33];
+    strncpy(id, yytext, 32);
+    id[32] = '\x0';
+    yylval = createNode(id, yylineno, TYPE_ID, unionNULL());
+    return ID;
+}
 
 [ \t] {}
 "\n" { yycolno = 1; }

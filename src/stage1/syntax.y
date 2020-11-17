@@ -1,10 +1,15 @@
 %{
     #include "build/stage1/lex.yy.c"
+    #include "include/io.h"
+    #include "include/parsingTree.h"
+    #include "include/scopeStack.h"
 
     void yyerror(const char*);
     short syntaxErrorExists = 0;
 
     int lineno = 0;
+
+    tree *parsingTree;
     
 %}
 
@@ -39,16 +44,29 @@
 %token CHAR
 %%
 
-Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); printTree($$, 0); }
+Program: ExtDefList { $$ = createNode("Program", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); parsingTree = $$; }
        ;
 ExtDefList: ExtDef ExtDefList { $$ = createNode("ExtDefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
           | %empty { $$ = NULL; }
           ;
-ExtDef: QualifiedSpecifier ExtDecList SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-      | QualifiedSpecifier SEMI { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
-      | QualifiedSpecifier FunDec CompSt { $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-      | QualifiedSpecifier FunDec error RC { fprintf(stderr, "Missing left brace\n"); }
-      | QualifiedSpecifier FunDec LC error { fprintf(stderr, "Missing right brace\n"); } 
+ExtDef: QualifiedSpecifier ExtDecList SEMI { 
+    $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+}
+      | QualifiedSpecifier SEMI {
+    $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 2, $1, $2);
+}
+      | QualifiedSpecifier FunDec CompSt {
+    $$ = createNode("ExtDef", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+}
+      | QualifiedSpecifier FunDec error RC {
+    fprintf(stderr, "Missing left brace\n");
+}
+      | QualifiedSpecifier FunDec LC error {
+    fprintf(stderr, "Missing right brace\n");
+} 
       ;
 ExtDecList: VarDec { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
           | VarDec COMMA ExtDecList { $$ = createNode("ExtDecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -60,30 +78,60 @@ Specifier: TYPE { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()
          | StructSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          | FunctionSpecifier { $$ = createNode("Specifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
          ;
-StructSpecifier: STRUCT ID LC DefList RC { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
+StructSpecifier: STRUCT ID LC DefList RC {
+    $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 5, $1, $2, $3, $4, $5);
+
+    insert(stack->stackTop->symbt, createNodeEntry($2->name, createEntryValue(1)));
+}
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
-FunctionSpecifier: FUNCTION LT SpecifierList RA Specifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
+FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA QualifiedSpecifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
                  ;
-SpecifierList: Specifier { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
-             | Specifier COMMA SpecifierList { $$ = createNode("SpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
-        | %empty { $$ = NULL; }
-        ;
+QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+                      | QualifiedSpecifier COMMA QualifiedSpecifierList { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+                      | %empty { $$ = NULL; }
+                      ;
 
-VarDec: ID { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
+VarDec: ID {
+    $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 1, $1);
+
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+}
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
-FunDec: ID LP VarList RP { $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
-      | ID LP RP { $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+FunDec: ID LP { 
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+    shouldMerge = 1;
+    pushScope(stack, initTable());
+    }
+    VarList RP 
+    { 
+    $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 4, $1, $2, $3, $4); 
+    }
+      | ID LP RP {
+    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)));
+
+    $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+}
       | ID LP error { fprintf(stderr, "Missing closing parenthesis \')\'\n"); }
       ;
 VarList: ParamDec COMMA VarList { $$ = createNode("VarList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
        | ParamDec { $$ = createNode("VarList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
        ;
-ParamDec: QualifiedSpecifier VarDec { $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+ParamDec: QualifiedSpecifier VarDec {
+    $$ = createNode("ParamDec", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 2, $1, $2);
+}
         ;
 
-CompSt: LC DefList StmtList RC { $$ = createNode("CompSt", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
+CompSt: LC DefList StmtList RC {
+    $$ = createNode("CompSt", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 4, $1, $2, $3, $4);
+}
       ;
 StmtList: Stmt StmtList { $$ = createNode("StmtList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
         | Stmt Def error StmtList { fprintf(stderr, "Missing specifier\n"); }
@@ -98,10 +146,18 @@ Stmt: Exp SEMI { $$ = createNode("Stmt", @$.first_line, NTERM, unionNULL()); ins
     | RETURN Exp error { fprintf(stderr, "Missing semicolon \';\'\n"); }
     ;
 
-DefList: Def DefList { $$ = createNode("DefList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
+DefList: Def DefList {
+    $$ = createNode("DefList", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 2, $1, $2);
+
+    shouldMerge = 0;
+}
        | %empty { $$ = NULL; }
        ;
-Def: QualifiedSpecifier DecList SEMI { $$ = createNode("Def", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
+Def: QualifiedSpecifier DecList SEMI {
+    $$ = createNode("Def", @$.first_line, NTERM, unionNULL());
+    insertChildren($$, 3, $1, $2, $3);
+}
    | QualifiedSpecifier DecList error { fprintf(stderr, "Missing semicolon \';\'\n"); }
    ;
 DecList: Dec { $$ = createNode("DecList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
@@ -111,8 +167,10 @@ Dec: VarDec { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertC
    | VarDec ASSIGN Exp { $$ = createNode("Dec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    ;
 
-LambdaExp: LAMBDA LT VarList RA Specifier GT CompSt { $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); } 
+LambdaExp: LAMBDA LambdaDec CompSt { $$ = createNode("LambdaExp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); } 
          ;
+LambdaDec: LT VarList RA Specifier GT { $$ = createNode("LambdaDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 5, $1, $2, $3, $4, $5); }
+
 Exp: Exp ASSIGN Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp AND Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
    | Exp OR Exp { $$ = createNode("Exp", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -157,98 +215,18 @@ void yyerror(const char *s) {
     fprintf(stderr, "Error Type B at Line %d: ", yylineno);
 }
 
-int debugMain(int argc, char **argv) {
-    char *file_path;
-    
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <file_path>\n", argv[0]);
-        return 1;
-    } else if (argc > 2) {
-        fprintf(stderr, "Too many arguments.\n");
-        return 1;
-    } else if (argc == 2) {
-        file_path = argv[1];
-
-        if (strlen(file_path) <= 3 || strcmp(file_path + strlen(file_path) - 4, ".spl")) {
-            fprintf(stderr, "Invalid file: .spl file expected\n");
-            return 1;
-        }
-        if (!(yyin = fopen(file_path, "r"))) {
-            perror(argv[1]);
-            return 1;
-        }
-
-        yyparse();
-
-        fclose(yyin);
-        
-        return (lexicalErrorExists || syntaxErrorExists) ? 1 : 0;
-    }
-}
 
 int main(int argc, char **argv) {
 
 // while (__AFL_LOOP(1000)) {
-
-    char *file_path;
     
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <file_path>\n", argv[0]);
-        return 1;
-    } else if (argc > 2) {
-        fprintf(stderr, "Too many arguments.\n");
-        return 1;
-    } else if (argc == 2) {
-        file_path = argv[1];
+    if (!check_file_path_legal(argc, argv)) return 1;
+    yyin = fopen(argv[1], "r");
 
-        if (strlen(file_path) <= 3 || strcmp(file_path + strlen(file_path) - 4, ".spl")) {
-            fprintf(stderr, "Invalid file: .spl file expected\n");
-            return 1;
-        }
-        if (!(yyin = fopen(file_path, "r"))) {
-            perror(argv[1]);
-            return 1;
-        }
+    stack = initStack(initTable());
+    yyparse();
 
-        char output_name[strlen(file_path) + 1];
-        for (int i = 0; i < strlen(file_path) - 3; i++)
-            output_name[i] = file_path[i];
-        output_name[strlen(file_path) - 3] = '\0';
-        strcat(output_name, "out");
-
-        freopen(output_name, "w", stdout);
-        FILE *err = freopen("tempErr", "w", stderr);
-
-        yyparse();
-
-        freopen("/dev/tty", "w", stdout);
-        freopen("/dev/tty", "w", stderr);
-
-        if (lexicalErrorExists || syntaxErrorExists) {
-            remove(output_name);
-            fclose(err);
-
-            err = fopen("tempErr", "r");
-            char c;
-            while ((c = fgetc(err)) != EOF) putchar(c);
-            fclose(err);
-
-            remove("tempErr");
-            
-        } else {
-			remove("tempErr");
-
-            FILE *out = fopen(output_name, "r");
-            char c;
-            while ((c = fgetc(out)) != EOF) putchar(c);
-
-            fclose(out);
-        }
-
-        fclose(yyin);
-        
-        return (lexicalErrorExists || syntaxErrorExists) ? 1 : 0;
-    }
+    printTree(parsingTree, 0);
 
 // } //End of AFL_LOOP
 
