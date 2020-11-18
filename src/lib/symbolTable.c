@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "include/symbolTable.h"
+#include "include/debug.h"
 
 
 /*
@@ -48,6 +49,7 @@ symbolTable *createTable(nodeEntry *newNode) {
 
 int insert(symbolTable *symbt, nodeEntry *newNode, int lineno) {
     //Return 0 if success, otherwise 1;
+    debugPoint();
     if (!symbt) return 1;
 
     //empty table

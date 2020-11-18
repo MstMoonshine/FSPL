@@ -36,6 +36,8 @@ linkedList *insertAtHead(linkedList *list, symbolTable *scope) {
 }
 
 linkedList *removeAtHead(linkedList *list) {
+    if (!list) return NULL;
+    if (!list->outerScope) return NULL;
     linkedList *ret = list->outerScope;
     free(list);
     return ret;

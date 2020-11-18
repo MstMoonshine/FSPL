@@ -3,6 +3,7 @@
     #include "include/io.h"
     #include "include/parsingTree.h"
     #include "include/scopeStack.h"
+    #include "include/debug.h"
 
     void yyerror(const char*);
     short syntaxErrorExists = 0;
@@ -84,7 +85,7 @@ StructSpecifier: STRUCT ID LC DefList RC {
     $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 5, $1, $2, $3, $4, $5);
 
-    insert(stack->stackTop->symbt, createNodeEntry($2->name, createEntryValue(1)), yylineno);
+    insert(getScope(stack), createNodeEntry($2->name, createEntryValue(1)), yylineno);
 }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
@@ -99,12 +100,13 @@ VarDec: ID {
     $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 1, $1);
 
-    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)), yylineno);
+    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(1)), yylineno);
 }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
-FunDec: ID LP { 
-    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)), yylineno);
+FunDec: ID LP {
+    debugPoint();
+    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(1)), yylineno);
     shouldMerge = 1;
     pushScope(stack, initTable());
     }
@@ -114,7 +116,7 @@ FunDec: ID LP {
     insertChildren($$, 4, $1, $2, $4, $5); 
     }
       | ID LP RP {
-    insert(stack->stackTop->symbt, createNodeEntry($1->name, createEntryValue(1)), yylineno);
+    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(1)), yylineno);
 
     $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 3, $1, $2, $3);

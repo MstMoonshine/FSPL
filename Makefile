@@ -6,6 +6,7 @@ AR = ar rcs
 
 SYS = $(shell uname -s)
 CFLAGS = -I$(ENV_PATH) -g
+# CFLAGS = -I$(ENV_PATH) -g -O0 -v -da -Q
 # Should never use bison on Mac... Use a virtual machine instead.
 ifeq ($(SYS), Linux)
 	CSYNFLAGS = -lfl -ly
