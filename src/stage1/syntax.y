@@ -254,4 +254,6 @@ while (__AFL_LOOP(1000)) {
 
 } //End of AFL_LOOP
 
+    return 0;
+
 }
