@@ -1,5 +1,4 @@
-int f}o()
-{
+int foo()û
   int a = 10;
   return a;
 }

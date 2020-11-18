@@ -1,11 +1,11 @@
 int foo()
-;
+{
   int a = 10;
   return a;
 }
 int test01(int a, int b)
 {
-  int c;
+  int c,
   c = foo();
   if (b > 0)
   {

@@ -1,9 +1,9 @@
 int foo()
 {
-  ént a = 10;
+  int a = 10;
   return a;
 }
-int test01(int a, int b)
+int test01(}nt a, int b)
 {
   int c;
   c = foo();
