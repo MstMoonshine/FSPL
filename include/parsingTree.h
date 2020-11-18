@@ -38,7 +38,7 @@ union values unionChar(char c);
 
 tree *createNode (char *name, int lineno, symType type, union values value);
 void setNode(tree *self, char *name, int lineno, symType type, union values value);
-void **insertChildren(tree *self, int num, ...); //Note that children nodes must be inserted (or changed) all at once.
+void insertChildren(tree *self, int num, ...); //Note that children nodes must be inserted (or changed) all at once.
 
 void printTree(tree *self, int depth);
 
