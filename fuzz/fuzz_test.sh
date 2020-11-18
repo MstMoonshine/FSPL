@@ -1,5 +1,6 @@
 #!/bin/sh
 
+DIRECTORY=$(pwd)/out
 if [ -d "$DIRECTORY" ]; then
 	record=fuzz_record$(date +"%T")
 	mkdir $record

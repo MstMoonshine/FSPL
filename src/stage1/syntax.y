@@ -242,7 +242,7 @@ void yyerror(const char *s) {
 
 int main(int argc, char **argv) {
 
-// while (__AFL_LOOP(1000)) {
+while (__AFL_LOOP(1000)) {
     
     if (!check_file_path_legal(argc, argv)) return 1;
     yyin = fopen(argv[1], "r");
@@ -252,6 +252,6 @@ int main(int argc, char **argv) {
 
     printTree(parsingTree, 0);
 
-// } //End of AFL_LOOP
+} //End of AFL_LOOP
 
 }
