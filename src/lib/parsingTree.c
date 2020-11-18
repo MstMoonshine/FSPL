@@ -50,7 +50,7 @@ void setNode(tree *self, char *name, int lineno, symType type, union values valu
 }
 
 void insertChildren(tree *self, int num, ...) {
-    if (self) return;
+    if (!self) return;
 
     tree **childrenArray = (tree **)malloc(num * sizeof(tree *));
 
