@@ -1,3 +1,0 @@
-int main() {
-    struct a {int b;} c;
-}
