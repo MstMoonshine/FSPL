@@ -13,16 +13,18 @@ scopeStack *initStack(symbolTable *globalScope) {
 
 symbolTable *getScope(scopeStack *stack) {
     if (!stack || !stack->stackTop) {
-        return createTable(createNodeEntry("Temp", createEntryValue(1)));
-    } // for secure consern;
+        return NULL;
+    }
     return stack->stackTop->symbt;
 }
 
 entryValue *lookupGlobal(scopeStack *stack, const char *key) {
+    if (!stack) return NULL;
     return lookupList(stack->stackTop, key);
 }
 
 entryValue *lookupLocal(scopeStack *stack, const char *key) {
+    if (!stack) return NULL;
     return lookupLocalList(stack->stackTop, key);
 }
 
@@ -33,7 +35,7 @@ void pushScope(scopeStack *stack, symbolTable *scope) {
     // printList(stack->stackTop);
 
     //in case NULL reference
-    if (!stack->stackTop) return;
+    if (!stack) return;
 
     stack->stackTop = insertAtHead(stack->stackTop, scope);
 
@@ -49,7 +51,7 @@ symbolTable *popScope(scopeStack *stack) {
     // printf("Before:\n");
     // printf("---------------------\n");
     // printList(stack->stackTop);
-
+    if (!stack) return NULL;
     symbolTable *ret = getScope(stack);
     // printf("After:\n");
     // printf("---------------------\n");
@@ -64,6 +66,6 @@ symbolTable *popScope(scopeStack *stack) {
 
 
 void printStack(scopeStack *stack) {
-    if (!stack->stackTop) return;
+    if (!stack) return;
     printList(stack->stackTop);
 }

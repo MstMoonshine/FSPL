@@ -12,6 +12,8 @@ linkedList *initList(symbolTable *globalScope) {
 }
 
 entryValue *lookupList(linkedList *list, const char *key) {
+    if (!list) return NULL;
+
     linkedList *cur;
     for (cur = list; cur; cur = cur->outerScope) {
         entryValue *res = lookup(cur->symbt, key);
@@ -23,6 +25,7 @@ entryValue *lookupList(linkedList *list, const char *key) {
 }
 
 entryValue *lookupLocalList(linkedList *list, const char *key) {
+    if (!list) return NULL;
     return lookup(list->symbt, key);
 }
 
@@ -37,7 +40,7 @@ linkedList *insertAtHead(linkedList *list, symbolTable *scope) {
 
 linkedList *removeAtHead(linkedList *list) {
     if (!list) return NULL;
-    if (!list->outerScope) return NULL;
+
     linkedList *ret = list->outerScope;
     free(list);
     return ret;

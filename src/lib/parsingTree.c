@@ -41,6 +41,8 @@ tree *createNode(char *name, int lineno, symType type, union values value) {
 }
 
 void setNode(tree *self, char *name, int lineno, symType type, union values value) {
+    if (!self) return;
+
     self->name = name;
     self->lineno = lineno;
     self->type = type;
@@ -48,6 +50,8 @@ void setNode(tree *self, char *name, int lineno, symType type, union values valu
 }
 
 void insertChildren(tree *self, int num, ...) {
+    if (self) return;
+
     tree **childrenArray = (tree **)malloc(num * sizeof(tree *));
 
     va_list children;

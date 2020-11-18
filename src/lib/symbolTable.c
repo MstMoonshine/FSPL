@@ -49,7 +49,7 @@ symbolTable *createTable(nodeEntry *newNode) {
 
 int insert(symbolTable *symbt, nodeEntry *newNode, int lineno) {
     //Return 0 if success, otherwise 1;
-    debugPoint();
+
     if (!symbt) return 1;
 
     //empty table
@@ -61,6 +61,7 @@ int insert(symbolTable *symbt, nodeEntry *newNode, int lineno) {
     //insertion
     symbolTable *cur = symbt;
     while (1) {
+        if (!cur || !cur->entry || !newNode) return 1;
         int cmp = strcmp(cur->entry->key, newNode->key);
         if (!cmp) { fprintf(stderr, "Error: Identifier redefinition at line %d: %s\n", lineno, newNode->key); return 1; }
 
@@ -82,10 +83,11 @@ int insert(symbolTable *symbt, nodeEntry *newNode, int lineno) {
 }
 
 entryValue *lookup(symbolTable *symbt, const char *key) {
-    if (!symbt->entry) return NULL; // empty table;
+    if (!symbt) return NULL;
 
     symbolTable *cur = symbt;
     while (cur) {
+        if (!cur->entry) return NULL;
         int cmp = strcmp(cur->entry->key, key);
 
         if (!cmp) return &cur->entry->value;
