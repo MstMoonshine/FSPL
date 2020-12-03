@@ -1,6 +1,6 @@
 # Stage 2: Semantic Analysis
 
-Semantic analysis is a coherent combination of scope checking and type checking. Scope checking is the process during which we examinate whether there are conflictions caused by repeated IDs and at the same time we generate a symbol table for each scope. While type checking is to check whether the types of variables in an expression are compatible.
+Semantic analysis is a coherent combination of scope checking and type checking. Scope checking is the process during which we examinate whether there exist undefined IDs or conflictions caused by repeated IDs and generate a symbol table for each scope. While type checking is to check whether the types of variables in an expression are compatible.
 
 ## Scope Checking
 
@@ -40,6 +40,6 @@ FunDec -> ID LP RP
 
 ### To Do List: (We are on stage 2: semantic analysis)
 - [x] Build BSTs as symbol tables;
-- Build scope stack consists of symbol tables;
-- Scope checking;
+- [x] Build scope stack consists of symbol tables;
+- [x] Scope checking;
 - Typechecking (details to be determined);
