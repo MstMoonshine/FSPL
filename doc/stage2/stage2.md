@@ -38,8 +38,21 @@ FunDec -> ID LP VarList RP
 FunDec -> ID LP RP
 ```
 
+
+## Type Checking
+
+There are three primitive and three derived types in FSPL:  
+- Primitive: `int`, `float` and `char`
+- Derived: arrays, structures and functions
+
+And there are only two situations where type checking is necessary: assignments of variables and evaluations of expressions.
+
+
+
 ### To Do List: (We are on stage 2: semantic analysis)
 - [x] Build BSTs as symbol tables;
 - [x] Build scope stack consists of symbol tables;
 - [x] Scope checking;
-- Typechecking (details to be determined);
+- Implementation of types;
+- Type checking in expressions;
+- Type checking in variable assignments;
