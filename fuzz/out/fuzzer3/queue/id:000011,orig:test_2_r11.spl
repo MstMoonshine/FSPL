@@ -1,0 +1,14 @@
+int compare1(inty)
+{
+  if (x > y) {rn 1;}
+  else if (y > x) {return -1;}
+  else {return 0;}
+_r11(int i, int m, int n)
+{
+  int compar 10;
+  if (i == 0)
+  {
+    return compare1(m, n)
+  {
+    return comp(m, n);
+  }

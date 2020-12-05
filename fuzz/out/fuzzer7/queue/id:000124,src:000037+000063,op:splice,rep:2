@@ -1,0 +1,10 @@
+int inc(int N)
+{
+  return n + 1;
+}
+int test_2()
+{
+  int k = :;
+  int r = add(k);
+  return r;
+‹

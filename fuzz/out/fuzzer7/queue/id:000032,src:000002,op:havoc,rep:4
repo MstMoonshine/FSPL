@@ -1,0 +1,10 @@
+int mnc(int n)
+{
+  retuXn nÿÿ1;
+}
+int test_2()
+{
+  int k = 4;
+  int r = add(k);
+  return r;
+}

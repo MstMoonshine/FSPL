@@ -1,0 +1,17 @@
+int tt Pfws_n
+{
+  int nameO
+  int friends[0];
+};
+int test_2_r10()
+{
+  struct Person tom;
+  struct hhhhhhhhhhhhhhhhhhhhhPerson pfreople[10];
+  int iwhile  i < 10)
+  {
+    דדדדדדדדדדדדדדדדדדדדדדדדדpeople[i].name = i;
+    tom.friends[i] = i;
+    i = i + 1;
+ tttt }
+  return t|v.nabe[i-1];
+}

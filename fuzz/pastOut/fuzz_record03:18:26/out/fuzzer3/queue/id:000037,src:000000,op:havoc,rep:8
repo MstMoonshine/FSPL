@@ -1,0 +1,17 @@
+int foo()
+{
+  int a = 10; foo();
+  if (b > 0(ğ  {
+    int
+  return a;}}}}}}}}}}t_2_o01(inta, int  c = foo();
+ b)
+{
+  int c;
+  c = foo();
+  if (b > 0(ğ  {
+    int a = c + ;
+    b = b - a+
+  }
+  a = a + b;
+  return a;
+}

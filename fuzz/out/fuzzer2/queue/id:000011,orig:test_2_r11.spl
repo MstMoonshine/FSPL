@@ -1,0 +1,15 @@
+int compare1 x, int y)
+{
+  in 1;}
+  else if (y > x) {return -1;}lse {ret}
+int test_2_r11(int i, int m, int n)
+{
+mpare2 =
+  i0)
+  {
+    return compare1(m, n);
+  }
+  
+  {are2(m, n);
+  }
+}

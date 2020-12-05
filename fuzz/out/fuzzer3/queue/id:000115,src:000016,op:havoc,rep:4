@@ -1,0 +1,10 @@
+coc;
+       nt c;
+        float d someStruct {
+ (     ,int c;
+        float d;
+};
+int main() {
+	const int b;
+	const struct someStruct d;
+}

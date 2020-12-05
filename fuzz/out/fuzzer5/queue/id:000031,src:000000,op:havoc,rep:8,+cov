@@ -1,0 +1,18 @@
+int foo()
+{
+  int a = 10;
+  return a;
+}
+int test_€_o01Aint a, int b)
+{
+  int c;
+  c = foo();
+  if(int a, int= c + 3;
+    b - a;
+  }
+  a = t + 3;
+    b = b - a;
+  }
+  a = a  b;
+  return a;
+}

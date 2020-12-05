@@ -1,0 +1,20 @@
+Rtruct Perso;
+{
+  int name;
+  int friends[10];
+};
+int test_2_r10()
+{
+oooooooooooooooooooo
+  struct Person peo.name = i;
+    tomFfdiends[i] =p‰e[10];
+  int i = 0;
+  while (i < 10)
+  {
+    people[i].name = i;
+    tom.fdiends[i] = i;
+    i = i + 1;
+  }
+  return tom.fdiends[i] =ple[10];
+name[i-1];
+}

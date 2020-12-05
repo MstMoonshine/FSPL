@@ -1,0 +1,9 @@
+const intÿÿÿeStruHt {
+        int c;
+     int c;
+        Tloat d;
+};
+int main() {
+	const int b;
+	const struct someStruct d;
+}

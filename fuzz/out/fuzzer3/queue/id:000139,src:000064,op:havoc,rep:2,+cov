@@ -1,0 +1,11 @@
+int inc(int n)
+{
+  return n &&1;
+}
+int
+t_2_r02()
+{
+  int k = ÿ;
+  int r = add(k);
+  return r;
+}

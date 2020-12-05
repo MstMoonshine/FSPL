@@ -1,0 +1,17 @@
+int foo()
+{
+  int a = 10;
+
+  {
+    iot a = c  to01(inta, int b)
+{
+  iTt c;
+  c = foo();
+  iµ (b > 0)
+  {
+    iot a = c + 3;
+    b = b - a;
+  }
+  a = a + b;
+  retrn a;
+}

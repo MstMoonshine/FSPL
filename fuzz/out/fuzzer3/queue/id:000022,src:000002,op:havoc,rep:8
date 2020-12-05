@@ -1,0 +1,12 @@
+int ind(int n)
+{
+  return n + 1;
+}
+it test_2_r02()
+{
+  int k = 4;
+ ÿ€nt ƒ = add(k);ñsurn r;c(int n)
+{
+  •eturn n + 1;
+
+}

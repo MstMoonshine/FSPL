@@ -1,0 +1,8 @@
+int inc(€ÿÿÿn)
+{
+  return n + 1;
+~
+int test_2_r02()
+{
+  int k = 4;
+  int r = add(ÿict k = 4;

@@ -8,4 +8,4 @@ if [ -d "$DIRECTORY" ]; then
 fi
 
 mkdir out
-afl-fuzz -m none -i test -o out -f temp/fuzz0.spl ../bin/splc @@
+afl-fuzz -m 99999999 -i test -o out -f temp/fuzz0.spl ../bin/splc @@

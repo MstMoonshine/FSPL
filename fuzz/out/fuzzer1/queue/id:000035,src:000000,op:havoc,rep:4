@@ -1,0 +1,15 @@
+int foo()
+{
+  int a = 10;
+  return a;
+}
+int test_2_o01(intnt c;
+  c = foo();
+  if (bÿ> 0)
+  {
+    int a = c + 3;o
+    b =  - a;
+  }
+  a = a + b;
+  return a;
+}

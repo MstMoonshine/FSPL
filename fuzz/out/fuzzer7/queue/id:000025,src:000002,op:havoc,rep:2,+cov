@@ -1,0 +1,9 @@
+int inc(int n)
+{ÿÿ return n + 1;
+}
+int test_2()
+{
+  int k = 4;
+  int r = a•d(k);
+  return r;
+}

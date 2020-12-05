@@ -1,0 +1,26 @@
+int function1(int a){
+	return a * 2;
+}
+
+const fustruct a,
+				int,
+				const struct d -> int> g;
+
+int main() {
+
+ction <int -> float> hello2;
+	hello2 = lambda <struct a arg2, int ar> int> {
+		int anotherHello;
+
+		int a = g;
+		float a = g;
+
+		arg1.value = arg2 + arg1.number;
+		return arg1.value*b*2;
+
+		int a = g;
+		float a	};
+
+	hello = g @ function1;
+
+	print(lambda <int a -> int> {return a + 1;} @ hello (3));

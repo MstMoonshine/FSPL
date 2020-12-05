@@ -1,0 +1,13 @@
+int foo()
+{
+  int a = 10;
+t test_2_o0(int a, int b)
+{
+  in(b > 0)
+  {
+  8 int a = c + 3;
+    b = b - a;
+  }
+  a = a + b;
+  return a;
+}

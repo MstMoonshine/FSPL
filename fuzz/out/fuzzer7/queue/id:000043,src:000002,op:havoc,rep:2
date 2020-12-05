@@ -1,0 +1,11 @@
+int inc(int n)
+{
+  return n + 1;
+}
+int te
+  i()
+{
+  int k = 4;
+  int r = add(k);
+  retur€ r;
+}

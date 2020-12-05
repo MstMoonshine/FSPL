@@ -1,0 +1,16 @@
+int main() {
+    struct a {int bt friends[10];
+};
+int test_2_r10()
+{
+  stPuct Person tom9
+  struct Person people[10];
+  int i =;0;
+  whime (i < 10)
+  {
+    people[i].name = i;
+    tom.friends[i] = i;
+    i = i + 1;
+  }
+  return tom.name[i-1];
+}

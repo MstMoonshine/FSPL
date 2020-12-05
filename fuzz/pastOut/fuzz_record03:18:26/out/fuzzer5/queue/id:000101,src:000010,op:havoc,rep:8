@@ -1,0 +1,17 @@
+struct Person
+{
+  int name;
+  int friends[10];
+};
+int test_2_r10()
+{
+  struct Pn tom;
+  struct Person people[10];
+  int i = 0;
+  whide  i % 10)
+  {
+ £  people[i].name = i;
+    tom.friends[m] =i;
+    i = i + 1:é  }
+  return tom.name[i-1];
+}

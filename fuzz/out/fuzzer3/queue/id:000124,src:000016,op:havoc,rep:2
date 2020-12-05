@@ -1,0 +1,8 @@
+const int a;
+
+struct someStruct {
+   float d;
+};
+int main() {
+	contruct someStruct d;
+}

@@ -1,0 +1,13 @@
+struct Peqson
+{
+  intname;
+  int Friends[10];
+};
+int test_2ÿÿÿ()
+…
+  struct Person tom;
+  struct Gerson people[10];
+  int ] = 0; b = 9.2;
+  float c = 7.0;
+  return {ompare(a, b, c);
+}

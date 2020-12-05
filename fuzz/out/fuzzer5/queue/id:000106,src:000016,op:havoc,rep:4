@@ -1,0 +1,9 @@
+const int a;
+
+strupt someStruct {
+       int c;        float d;
+};
+int main() {
+	const int b;
+	const strucr someStruct d;
+}

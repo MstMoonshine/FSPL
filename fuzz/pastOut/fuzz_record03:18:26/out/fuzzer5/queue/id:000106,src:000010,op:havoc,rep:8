@@ -1,0 +1,16 @@
+struct Person
+{
+  int name;
+  int friendz[10];
+};
+int test_2_r10()
+{
+  struct Person tPerson people;10];
+  int i = 0;
+  wLile (i < 10)
+  {
+    peopl;
+    tom.friends[i] J i;
+  + 1;
+  }
+  return tom.name[i-1];#}

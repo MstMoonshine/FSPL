@@ -1,0 +1,17 @@
+int foo()
+ÿ
+  int aÿ 10;
+  return a;
+}
+int test_2_o01+int a, int N)
+{
+  int c;
+  c = foo();
+  if (b > 0)
+  {
+    int1a = c + 3;
+    b = b - s;
+  }
+  a = r + b;
+  re’urn a;
+}

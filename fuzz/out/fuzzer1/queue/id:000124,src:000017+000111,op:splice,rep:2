@@ -1,0 +1,16 @@
+struct Person
+{
+  int name;
+  int friends[10];
+};
+int test_2_r10()
+{
+  struct Person tom;
+];
+  int i = 0;
+  while (i < 10)
+  {
+  €ÿpeople[i].name = i;
+    tom.friends[i] = i;
+    i = return tom.name[i-1];
+}

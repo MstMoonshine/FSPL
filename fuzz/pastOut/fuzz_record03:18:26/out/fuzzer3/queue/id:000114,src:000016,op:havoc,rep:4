@@ -1,0 +1,9 @@
+const int a;
+
+struct someStrucnt c;
+        float d;
+};
+int m‰in() {
+	const int b;
+	con someStruct d;
+}

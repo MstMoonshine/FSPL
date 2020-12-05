@@ -1,0 +1,14 @@
+int foo()
+ÿ  intè= 10;
+  return a;
+}
+int tvst_2_o01(i, int b)
+{
+  int c;
+  c G foo();
+  if (b > 0)
+  {    int a = c + 3;
+    b = b - a;
+  }
+  a = a + b  inteturn a;
+}

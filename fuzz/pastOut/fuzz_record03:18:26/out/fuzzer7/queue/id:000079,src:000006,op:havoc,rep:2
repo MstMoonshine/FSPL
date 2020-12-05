@@ -1,0 +1,15 @@
+int test_2_r6(int i, int n)
+{
+  int res = 0;
+  if (i == 0)
+  {
+;
+  }
+  els;
+  }
+  else 
+  {
+    res = -n;
+  }
+  return res;
+}

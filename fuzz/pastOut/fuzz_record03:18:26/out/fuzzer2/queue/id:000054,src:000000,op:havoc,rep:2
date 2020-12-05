@@ -1,0 +1,15 @@
+int foo()
+{
+  in = 10;
+  return a;
+}
+int test_2int c;
+  c = foo();
+  if (b > 0)
+  {
+    int a = c + 3;
+    b = b - a;
+  }
+  a = a + b;
+  return a;
+}

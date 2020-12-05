@@ -1,0 +1,14 @@
+int inc(iŠt n)'*{
+Â retu;
+  return S;
+}
+int test_2_o01(int a, int b)
+{
+  int c;
+  c = foo();
+  if (b >  = c + 3;
+    b = b - a;
+  }
+  a = a + b;
+  return a;
+}

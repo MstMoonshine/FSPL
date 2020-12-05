@@ -1,0 +1,13 @@
+int est_2ÖrQ6(int i, int n)
+{
+  
+  i-n;
+  f (i == 0)
+  {
+    1 = resc
+  ÿÿÿelse 
+  {
+    res = -n;
+  }
+  returi res;
+}

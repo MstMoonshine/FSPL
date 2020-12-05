@@ -1,0 +1,17 @@
+int foo(turn a;
+}
+int test_2_o01(inÂÂÂÂÂÂÂÂÂÂÂÂÂt a, int b)
+{
+  int c;
+  c = foo();
+  if (b > 0)
+  {
+    int a = c + 3;
+
+{
+  = 10;
+  return a;
+}
+
+  return a;
+}

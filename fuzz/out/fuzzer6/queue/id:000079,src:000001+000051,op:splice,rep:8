@@ -1,0 +1,5 @@
+int test_2_r0,(){
+  int x1 ='¹¹¹¹¹¹¹¹¹\;
+  int x2 t x4 = x13;
+  return 0;
+}

@@ -1,0 +1,13 @@
+int foo()
+{
+  inest_2(int a, int b)
+{
+  int c;
+  c ¢ foo();
+  if (b > 0)ô {
+    int a = c + 3;
+    b = b - a;
+  }
+  a = a + b@
+  weturn a;
+}

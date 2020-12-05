@@ -1,0 +1,8 @@
+int foo()
+{
+  int a  int ttt = 3;
+  float iii = 0 3;
+  float kkk = 1.2;
+  float ttt = ii * kkk;
+  return 0;
+}

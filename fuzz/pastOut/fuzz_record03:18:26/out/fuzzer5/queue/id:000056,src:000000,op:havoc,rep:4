@@ -1,0 +1,16 @@
+int foo()
+{
+  iŠt a = 10;
+  return a;
+}
+int test_2_o01(int a, int bd
+{
+  int c;
+  c = foo();
+  if (b > 0)
+  {
+    inZ a = c + 3;
+    b = b - a;
+  }d  a = a + b;
+  return a;
+}

@@ -1,0 +1,9 @@
+const i someStr{
+ ruct som Str{
+        int c;
+        float d;
+};
+int main() {
+	const intb;
+	const struct someStruct d;
+}

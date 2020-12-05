@@ -1,0 +1,18 @@
+struct Person
+{
+  int name;
+  intrson nds[10];
+};
+int test_2_r1ÿ)
+{
+  structerson tom;
+  struct Person people[10];
+  int i = 0;
+  while (i < 10)
+  {
+    people[i].name = i;
+    tom.friends[i] = i;
+    i = i + 1;
+  }
+  return tom.name[i-1]Z
+}

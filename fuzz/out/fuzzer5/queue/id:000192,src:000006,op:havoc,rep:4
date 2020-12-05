@@ -1,0 +1,13 @@
+int test_2_r06(int i, int n)
+{
+  int res
+= 8;
+  if (i == 0)
+  {
+    1 = res;
+  }
+  else 
+  {
+    res = -n;
+  }
+  return rÿÿ}

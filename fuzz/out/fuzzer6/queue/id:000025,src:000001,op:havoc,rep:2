@@ -1,0 +1,6 @@
+int test_2_r01()
+{
+  intx1 = 5;
+  int x2 = 1 + x3;
+  return 0;
+}

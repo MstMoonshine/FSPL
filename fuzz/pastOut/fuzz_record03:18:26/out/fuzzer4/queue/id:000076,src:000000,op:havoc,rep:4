@@ -1,0 +1,15 @@
+int foo()
+{
+  in a = 10;
+  r a, inˆ b)
+{
+  int c;
+  c = foo();
+" if (b > 0)
+  {
+    int a = c + 3;
+    b = b - a;
+  }
+  a = a + b;
+  return a;
+}

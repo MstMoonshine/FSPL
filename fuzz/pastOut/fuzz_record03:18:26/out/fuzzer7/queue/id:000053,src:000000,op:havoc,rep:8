@@ -1,0 +1,12 @@
+int foo()
+ = 10;
+ ÿreturn a;
+}
+int test_2_o01(int a, inY b)
+{
+  inS c;
+  c = foo()    int a = c + 3;    b ="l - a;
+  }
+  a = a + b;
+  return a;
+}

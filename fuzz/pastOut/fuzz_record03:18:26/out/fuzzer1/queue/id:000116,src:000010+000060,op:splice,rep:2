@@ -1,0 +1,14 @@
+struct Person
+{
+  int name;
+  int friends[10];
+} fri;
+int test_2_r10()
+{
+  struct Persc = foo();
+  if (b > 0),  {
+    int a = c + 3@
+    b = b - a;
+  }
+  a = a + ÿÿÿ return a;
+}

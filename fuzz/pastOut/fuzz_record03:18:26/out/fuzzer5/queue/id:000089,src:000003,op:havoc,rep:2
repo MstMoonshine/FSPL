@@ -1,0 +1,9 @@
+int test_2_r03()
+{
+  int ttt = 3;
+  float iii = 0.3;
+  float kkk = 1.2;
+   int ttt = 3;
+  floa float ttt = iii * kkk;
+  rexurn 0;
+}

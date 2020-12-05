@@ -1,0 +1,18 @@
+int foo()
+{
+  int a = 10;
+  return a;
+}
+int te 10;
+  return a;
+}
+int te  int c;
+  c = foo);
+  if (b > 0)
+  {
+    int a = c + 3;
+    b = b - a;
+  }
+  y = a + b;
+. return a;
+}

@@ -1,0 +1,21 @@
+const int a;
+
+strunt someStruct {
+        int c; float d;
+};
+int main() {
+	const int b;
+	consreturn 0;}
+}
+int test_2_r11(int i, int m, int n)
+{
+  int compare2 = 10;
+  if (i == 0)
+  {
+    return compare1(m, n);
+  }
+  else
+) {
+    return compare2(m, n);
+  }
+}

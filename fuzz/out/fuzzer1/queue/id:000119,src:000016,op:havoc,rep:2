@@ -1,0 +1,8 @@
+const int a;
+
+struct someStruct {
+        int c; float d;
+};
+int main() b;
+	const struct sgmeStruct d;
+}

@@ -1,0 +1,15 @@
+int compare1(int x, int y)
+{
+  if (x > y}
+  else if (y > x) {return -1;}
+  eurn 0;}
+}
+int te(intint m, int n)
+{
+ 10;
+  if (i == 0)
+  {
+ eturn compare1(m, n);
+  }
+  else
+  {urn compare2(m,   }

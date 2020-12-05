@@ -1,0 +1,40 @@
+int foo(=
+{
+  tnt a = 10;
+# return a;
+}
+int test_2_o01(int á, int b)
+{
+  int c;
+  c = foo(;
+  if (b > 0)
+  {
+    int a = a = 10;
+  rÿ€urn a aE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ı}
+  a = a + b;
+  return a;
+}

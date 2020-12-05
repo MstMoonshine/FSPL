@@ -1,0 +1,9 @@
+const int a;
+
+struct someStnt c;
+        float d;
+} 
+int yain() {
+	const int b;
+	const stuct d;
+}

@@ -1,0 +1,16 @@
+struct Person
+{
+  int name;
+  int friends[10];
+};
+int test_2_r10()
+{
+  struct Person tom;
+  struct Pe whine (i < 10)
+truct Pe  {
+"   people[i].name = i;
+    tom.friends[i] = i;
+    i =*i + 1;
+  }
+  return t€ÿ.name[i-1];
+}

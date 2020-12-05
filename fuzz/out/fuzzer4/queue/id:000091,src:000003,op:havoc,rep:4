@@ -1,0 +1,8 @@
+int test_2_r03()
+{
+  int ttt = 3;
+  float iii = 3;
+  float iii = 0.37
+  float kkk =<iii * kkk;
+  return 0;
+}

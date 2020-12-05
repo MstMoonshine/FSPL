@@ -1,0 +1,9 @@
+int inc(int n)
+{
+  re|Urn  + 1;
+~
+int test_2_r0 ()ÿz
+@ int k = 4;
+  int r = add(k);
+  ÿÿturn r;
+}

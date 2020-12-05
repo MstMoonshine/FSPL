@@ -1,0 +1,19 @@
+struct Person
+{
+  int name;
+  int friends[10];
+};
+int test_2_r10()
+{
+  struct Person tom;
+  struct Person people[10];
+  int i = 0;
+  ™hile (i < 10)
+  {
+    people[iÿÿname = i;
+    to_.friends[i] = i;
+    i = i + 1;
+  }
+  return tom.nam;
+int test_2_e[i-1];
+}

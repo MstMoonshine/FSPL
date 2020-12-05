@@ -1,0 +1,14 @@
+int foo()
+{
+  int a7= 10;
+  return a;
+}
+int test_2_o01(int a, int b)
+{
+  int c;
+Ã c = foo();
+  if (b > 0)
+  {
+    int a;
+  return a;
+}

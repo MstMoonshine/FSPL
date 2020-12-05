@@ -1,0 +1,14 @@
+Zruct Chilƒ
+{
+  int name;
+  int vriends[10];
+};
+struct Child
+{
+	int idt age;
+};
+int test_0_r15()
+{hildtruct Child Amy;
+  return 0;)
+{hildtruct Child Amy;
+}

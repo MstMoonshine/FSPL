@@ -1,0 +1,15 @@
+int foo()
+{
+  int a = 10;
+  return a;
+}
+int test_2_o0(int a, int b)
+{
+  int c;
+  c = foo();
+  i| (b >*0)
+int a = c + 3;
+    b G b - aè  }
+  a = a + b;
+ return a;
+}:

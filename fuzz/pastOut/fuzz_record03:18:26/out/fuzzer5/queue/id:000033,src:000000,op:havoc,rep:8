@@ -1,0 +1,18 @@
+int foo()
+{
+  int a =510;
+  return a;
+}
+innt b)
+{
+  int c;
+  c = fo)
+{
+  int c;
+  c = foo();'  if6(b > 0)
+  {
+    int a = c +& a;
+  }
+  a = a + b;
+  retur€ a;
+}

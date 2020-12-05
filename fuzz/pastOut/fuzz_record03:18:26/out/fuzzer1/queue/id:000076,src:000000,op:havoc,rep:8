@@ -1,0 +1,14 @@
+int foo()
+ÿ  int a = 10;
+  return a;}int te_t_2_o01(nt a, int b)
+{  int c;
+  c = foo();
+  if (b > 0)
+  {
+    int a = c = c + 3;
+    b + 3;
+    b iiiiiii;
+  }
+  a = a + b;
+  return a;
+}

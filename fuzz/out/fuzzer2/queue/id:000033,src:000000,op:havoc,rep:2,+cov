@@ -1,0 +1,16 @@
+int foo()
+{
+  int a = 10;
+  return a;
+}
+int test_2_o01(int a, int b)
+{
+  int q;
+  c = foo();
+  if (b > 0)
+  {
+    i2_o01(int a, int  b = b - a;
+  }
+  a = a + b;
+  return a;
+}

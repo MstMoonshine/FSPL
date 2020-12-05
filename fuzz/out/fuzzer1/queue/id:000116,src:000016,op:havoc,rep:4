@@ -1,0 +1,9 @@
+const int a;
+
+strmeStruct truct {
+       int `; float d;
+};
+int maMn() {
+	const int b;
+	const struct someStruct d;
+}

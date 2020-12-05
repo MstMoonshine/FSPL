@@ -1,0 +1,16 @@
+int foo()
+{
+  int a =nt c;
+  c = foo();
+  if (b > 0)
+1(inm a, int ×)
+{
+  int c;
+  c = foo();
+  if (b > 0)
+  {
+    int a = c + 3;
+    €ÿ= b - a
+  }
+  a = a J b;ì return a;
+}

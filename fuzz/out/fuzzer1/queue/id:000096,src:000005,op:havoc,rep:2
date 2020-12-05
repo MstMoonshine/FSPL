@@ -1,0 +1,7 @@
+int test_2_r05()
+{
+  float iii = 5.0;
+  float  int ttt;
+  ttt = iii * k\k;
+  return 0;
+}

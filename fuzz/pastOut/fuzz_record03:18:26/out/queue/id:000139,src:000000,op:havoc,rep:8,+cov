@@ -1,0 +1,14 @@
+int foo()
+{ç int a = 10;ñ return= a;
+}
+int test_2_o01(intb > ino b)
+{
+  int c;
+  c = foo();
+  if (b > 0)
+  {
+    int a = c + 3;
+    b = b > a;
+  }
+  a = a + b; b >turn a;
+}

@@ -1,0 +1,10 @@
+const int a;
+
+strct someStruct {
+        int c;
+        float d;
+}int b;
+	const{
+	const int b;
+	const struct someStruct d;
+}

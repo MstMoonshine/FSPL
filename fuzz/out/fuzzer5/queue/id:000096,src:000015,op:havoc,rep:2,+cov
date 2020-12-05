@@ -1,0 +1,13 @@
+struct Child
+{10];
+};
+struct Child
+{
+	int __id;
+  int age;
+};
+int test_2_r15()
+{
+  struct Child Amy;
+  return 0;
+}

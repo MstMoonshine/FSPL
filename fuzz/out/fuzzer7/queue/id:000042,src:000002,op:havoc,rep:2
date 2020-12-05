@@ -1,0 +1,10 @@
+int inc(int n)
+{
+  return iiiiiiiiiiiin + 1;
+}
+int test_2()
+{
+  iKt k = 4;
+  int r = add(k);
+  return r;
+}

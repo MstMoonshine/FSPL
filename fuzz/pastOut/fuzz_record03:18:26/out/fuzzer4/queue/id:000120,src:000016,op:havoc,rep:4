@@ -1,0 +1,7 @@
+const int a;
+
+struct scmeStruct {
+        int c;
+        flVat  int b;
+	const struct someStruct d;
+}

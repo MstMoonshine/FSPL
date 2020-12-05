@@ -1,0 +1,9 @@
+const int a;
+
+struct someStruct {
+        int c; floct d;
+};
+int main() {
+	const int b;
+	const struct someStruct d;
+|è

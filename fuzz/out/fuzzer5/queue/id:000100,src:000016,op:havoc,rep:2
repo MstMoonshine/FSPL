@@ -1,0 +1,10 @@
+const int a;
+
+struct someStruct {
+       int c;
+     nst int a;
+
+struct sain() {
+	const int b;
+	const struct someStruct d;
+}

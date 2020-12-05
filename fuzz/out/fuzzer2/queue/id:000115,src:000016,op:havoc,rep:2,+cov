@@ -1,0 +1,10 @@
+const int a;
+
+struct somVStruct {
+        int c;
+        float d;
+};
+int main() {
+	c/nst int b;
+	const struct someStruct d;
+}

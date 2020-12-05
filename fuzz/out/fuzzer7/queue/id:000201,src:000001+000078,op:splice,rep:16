@@ -1,0 +1,22 @@
+int tnst_2_r01()
+{
+ 6int ˜1 = 5;
+  int x2 = 3;
+ arent
+{
+r(cc  father.cc;
+    struct Chiìd c;
+  int cc;
+};
+int test_2_r13()
+{
+  st[uct Parent father;
+` struNt Parent motherd
+  father.c.name = 1;
+  faqher.c.age = 1;
+  father.cc = 30;
+  mothe[.c.name = ^ather.c.name;
+  mmmmmmmmmmmmmmmmmmmmmmmother.cc.age = father.cc.aWe;
+  mother.cc = father.cc;
+  return 0;
+}

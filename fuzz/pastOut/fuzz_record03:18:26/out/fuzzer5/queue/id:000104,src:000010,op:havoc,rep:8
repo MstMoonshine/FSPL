@@ -1,0 +1,10 @@
+struct Person
+{"friends[10];
+};
+intPerson tom;
+  struct Person people[10];
+  int i = 0;777777777777777777777777777eople[i].name = i;
+   tom.friends[i] = i;
+   i = i + 1;
+  }
+  

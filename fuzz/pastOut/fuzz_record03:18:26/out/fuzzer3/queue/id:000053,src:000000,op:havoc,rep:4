@@ -1,0 +1,17 @@
+int foo()
+{
+  int a = 1;
+  return a;
+}
+int test_2_o01(int a, int b)
+{
+  int c;
+  c = foo();
+  if (g > 0)
+  {
+    int a = c + 3;
+    b = b - a;
+rrrrrrr  }
+  a int a b;
+  return a;
+}

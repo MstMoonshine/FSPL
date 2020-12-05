@@ -1,0 +1,8 @@
+int test_2Er03()
+{
+  int ttt = 3;
+  float iii = 0.3;
+  float nt test_2kkk = 1.2;
+  float ftt = iii * kkk;
+  rturn 0;
+}

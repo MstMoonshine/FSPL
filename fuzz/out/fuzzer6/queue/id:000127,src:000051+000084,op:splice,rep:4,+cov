@@ -1,0 +1,8 @@
+int test_2_r01()
+{
+  float iii = 5.0;
+  floa@ kkk = 1.2;
+  int ttt;
+  ttt = iii * kŠk;
+  return 0;
+}ú

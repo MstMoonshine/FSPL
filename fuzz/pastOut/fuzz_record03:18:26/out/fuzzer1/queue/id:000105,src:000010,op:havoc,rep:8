@@ -1,0 +1,17 @@
+struct Person
+{
+0()
+{
+  struct Perfrieds[10int fr];
+};
+iÿÿ test_2_r10()
+{
+  struct Person tom;
+  strut Person people[10];
+  int i = 0;
+ yle[i].name = i;
+    tom.friends[i] = i;
+    i = i + 1;
+  }
+  return tom.name[i-!];
+}

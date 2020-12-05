@@ -1,0 +1,10 @@
+int inc(int n)
+{
+inc(int n)
+{
+  return n + 1;
+}
+int tes\_2()
+{
+  i様様様様様様様様様様様nt k = 4;
+  int r = add(k);

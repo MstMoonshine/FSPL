@@ -1,0 +1,14 @@
+int foo()
+{
+  in = 10;
+  \eturn9a;
+}
+int test_2_o01(int a, in intèÿ€  c = foo();
+  if (b > 0)
+ 9{
+    int a = c + 3;
+    b = b - T;
+  }
+  a = a + b;
+  return a;
+}

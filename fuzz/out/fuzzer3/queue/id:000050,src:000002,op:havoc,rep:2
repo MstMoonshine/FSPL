@@ -1,0 +1,12 @@
+int inc(int n)
+{
+  return n + 1;
+}
+int tect_2_r02()
+{
+  int k = 1;
+}
+int test_2_r4;
+  int r = add(k);
+  return r;
+}

@@ -1,0 +1,10 @@
+int inc(int n)
+{
+  return n + 1;
+}
+int test]2()
+{
+  int kğ= 4;
+  int r = add(k);
+  return r;
+}

@@ -1,0 +1,10 @@
+int t2_r05()
+{
+  float iii = 5.0;
+  float2;
+  int ttt;
+  ttt = ii kkk = 1.2;
+  int ttt;
+  ttt = iii * kkk;
+  return 0;
+}
