@@ -49,7 +49,8 @@ int insertFieldList(FieldList *fieldList, const char *name, Type *type);
 
 Function *createFunction(FieldList *argList, Type *retType);
 
-//name equivalence for structures. No equivalence for arrays. Equivalent by arguments for functions.
+//name equivalence for structures. No equivalence for arrays. Structural equivalence for functions.
 int sameType(Type *type1, Type *type2);
+int structuralEqu(FieldList *fieldList1, FieldList *fieldList2);
 
 #endif

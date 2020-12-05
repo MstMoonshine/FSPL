@@ -70,6 +70,37 @@ Function *createFunction(FieldList *argList, Type *retType) {
 
 
 int sameType(Type *type1, Type *type2) {
-    //...
+    if (type1->category != type2->category) return 0;
+
+    if (type1->category == PRIMITIVE)
+        if (type1->content.primitive == type2->content.primitive)
+            return 1;
+
+    if (type1->category == STRUCTURE)
+        if (!strcmp(type1->name, type2->name)) //name equivalence
+            return 1;
+
+    if (type1->category == FUNCTION)
+        if (sameType(type1->content.function->retType, 
+                     type2->content.function->retType) &&
+            structuralEqu(type1->content.function->argList,
+                          type2->content.function->argList))
+            return 1;
+    
+    return 0;
+
+}
+
+int structuralEqu(FieldList *fieldList1, FieldList *fieldList2) {
+    if (!fieldList1 || !fieldList2) return 0;
+
+    FieldList *cur1 = fieldList1, *cur2 = fieldList2;
+    while (cur1 && cur2) {
+        if (!sameType(cur1->type, cur2->type)) return 0;
+        cur1 = cur1->next; cur2 = cur2->next;
+    }
+
+    if (cur1 || cur2) return 0; //one list is longer than the other
+
     return 1;
 }

@@ -4,17 +4,17 @@ Semantic analysis is a coherent combination of scope checking and type checking.
 
 ## Scope Checking
 
-#### Tasks:
+### Tasks:
 - no undefined variables
 - no conflict inside a single scope
 - no out-reach reference in a lambda expression
 
-## REMARKS
+### REMARKS
 - There is a global scope correspondes to no CompSt;
 - The scope of a function body should include its arguments;
 - The CompSt of a lambda expression is not allowed to access variables (its environment) outside its own scope. Unless its environment has been made an attribute and GC is designed;
 
-## Details
+### Details
 There are a lot troubles here. It took me long to realize that the key is that things in `VarDec` sometime belongs to the scope before it and other times belongs to the one after.
 
 So make an individual scope for `VarList` and merge it into the `DefList` of the following `CompSt`:
@@ -47,14 +47,32 @@ There are three primitive and three derived types in FSPL:
 
 And there are three situations where type checking is necessary: assignments of variables, evaluations of expressions and return values of functions.
 
+### Type Equivalence
 
+There are two kinds of type equivalence:
+- name equivalence
+- structural equivalence
 
-### To Do List: (We are on stage 2: semantic analysis)
+In FSPL, we will need both: name equivalence for structures (this is for compitibility with C language) and structural equivalence (in order) for functions (function arguments)
+
+The type equivalence judgement is implemented in the `sameType` boolean function which consumes two `Type`s as arguments and returns 1 if they are equivalent, 0 if not.
+
+As mentioned before, two structures are equivalent if they have the same name. Arrays, as there is no need for their type equivalence, are never equivalent. Primitive types are equivalent in the naive way. Things are more subtle for function equivalence:
+
+Two functions are equivalent if
+- their argumemt lists are structural equivalent
+- their return type are equivalent
+
+This follows the common understanding of function equivalence: take the function as a homomorphism in $Hom(Type a_1 \times Type a_2 \times \cdots \times Type a_n, Type b)$.
+
+There is a mutual recursion here: for function equivalence we will be needing structrual equivalence and for structral equivalence we need `sameType` for each field in turn.
+
+# To Do List: (We are on stage 2: semantic analysis)
 - [x] Build BSTs as symbol tables;
 - [x] Build scope stack consists of symbol tables;
 - [x] Scope checking;
 - [x] Implementation of types;
-- Equivalence checking function for types, i.e. `sameType`;
+- [x] Equivalence checking function for types, i.e. `sameType`;
 - Type checking in expressions;
 - Type checking in variable assignments;
 - Type checking in returns of functions.
