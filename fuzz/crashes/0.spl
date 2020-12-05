@@ -1,6 +1,11 @@
 int foo()
 {
+<<<<<<< HEAD
   int a = 10;õß return a;
+=======
+  int a = 10;
+  return a;
+>>>>>>> 0cd26b2f5ecab0a5dd5c866457f61f911a1f67d5
 }
 int test_2_o01(int a, int b)
 {
@@ -8,7 +13,11 @@ int test_2_o01(int a, int b)
   c = foo();
   if (b > 0)
   {
+<<<<<<< HEAD
     int a = c + 3;
+=======
+    int a = { + 3;
+>>>>>>> 0cd26b2f5ecab0a5dd5c866457f61f911a1f67d5
     b = b - a;
   }
   a = a + b;

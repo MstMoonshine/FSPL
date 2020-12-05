@@ -3,9 +3,7 @@
 A compiler project for Functional SUSTech Programming Language.
 
 ### Issues:
-- Why is `Specifier SEMI` allowed?
 - If GC for function environments are to be implemented, how to do it?
-- `void` not allowed?
 - Should composition be set to left or right associative?
 
 ## REMARKS

@@ -1,5 +1,10 @@
 int foo()
+<<<<<<< HEAD
 {  int a = 10;
+=======
+{
+  int a = 10;
+>>>>>>> 0cd26b2f5ecab0a5dd5c866457f61f911a1f67d5
   return a;
 }
 int test_2_o01(int a, int b)
@@ -9,7 +14,11 @@ int test_2_o01(int a, int b)
   if (b > 0)
   {
     int a = c + 3;
+<<<<<<< HEAD
     b = b - a;
+=======
+   b = b - a;
+>>>>>>> 0cd26b2f5ecab0a5dd5c866457f61f911a1f67d5
   }
   a = a + b;
   return a;
