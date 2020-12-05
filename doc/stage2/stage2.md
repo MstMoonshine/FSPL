@@ -45,7 +45,7 @@ There are three primitive and three derived types in FSPL:
 - Primitive: `int`, `float` and `char`
 - Derived: arrays, structures and functions
 
-And there are only two situations where type checking is necessary: assignments of variables and evaluations of expressions.
+And there are three situations where type checking is necessary: assignments of variables, evaluations of expressions and return values of functions.
 
 
 
@@ -53,6 +53,8 @@ And there are only two situations where type checking is necessary: assignments 
 - [x] Build BSTs as symbol tables;
 - [x] Build scope stack consists of symbol tables;
 - [x] Scope checking;
-- Implementation of types;
+- [x] Implementation of types;
+- Equivalence checking function for types, i.e. `sameType`;
 - Type checking in expressions;
 - Type checking in variable assignments;
+- Type checking in returns of functions.
