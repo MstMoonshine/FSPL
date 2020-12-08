@@ -67,12 +67,27 @@ This follows the common understanding of function equivalence: take the function
 
 There is a mutual recursion here: for function equivalence we will be needing structrual equivalence and for structral equivalence we need `sameType` for each field in turn.
 
+### Type information recording
+- Add the identifiers into the symbol table;
+- Add the type information at the same time.
+
+### Type checking in expressions
+
+- Determine the types of each components (from lexical analyzer or symbol table);
+- Check whether the operations are legal or not.
+
+### Type checking in variable assignments
+
+- Evaluate the type of the expression;
+- Check whether the types match.
+
 # To Do List: (We are on stage 2: semantic analysis)
 - [x] Build BSTs as symbol tables;
 - [x] Build scope stack consists of symbol tables;
 - [x] Scope checking;
 - [x] Implementation of types;
 - [x] Equivalence checking function for types, i.e. `sameType`;
+- Type information recording during variable declaration (add to symbol table);
 - Type checking in expressions;
 - Type checking in variable assignments;
 - Type checking in returns of functions.
