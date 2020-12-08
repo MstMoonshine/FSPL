@@ -3,6 +3,8 @@
     #include "include/io.h"
     #include "include/parsingTree.h"
     #include "include/scopeStack.h"
+    #include "include/type.h"
+
     #include "include/debug.h"
 
     void yyerror(const char*);
@@ -40,7 +42,7 @@
 %token IF ELSE WHILE RETURN
 %token SEMI COMMA
 %token LAMBDA
-%token TYPE STRUCT FUNCTION
+%token TYPE STRUCT FUNC
 %token CONST
 %token INT 
 %token FLOAT
@@ -85,11 +87,13 @@ StructSpecifier: STRUCT ID LC DefList RC {
     $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 5, $1, $2, $3, $4, $5);
 
-    insert(getScope(stack), createNodeEntry($2->name, createEntryValue(1)), yylineno);
+    Type *type = NULL;
+
+    insert(getScope(stack), createNodeEntry($2->name, createEntryValue(type)), yylineno);
 }
                | STRUCT ID { $$ = createNode("StructSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 2, $1, $2); }
                ;
-FunctionSpecifier: FUNCTION LT QualifiedSpecifierList RA QualifiedSpecifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
+FunctionSpecifier: FUNC LT QualifiedSpecifierList RA QualifiedSpecifier GT { $$ = createNode("FunctionSpecifier", @$.first_line, NTERM, unionNULL()); insertChildren($$, 6, $1, $2, $3, $4, $5, $6); }
                  ;
 QualifiedSpecifierList: QualifiedSpecifier { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 1, $1); }
                       | QualifiedSpecifier COMMA QualifiedSpecifierList { $$ = createNode("QualifiedSpecifierList", @$.first_line, NTERM, unionNULL()); insertChildren($$, 3, $1, $2, $3); }
@@ -100,13 +104,16 @@ VarDec: ID {
     $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 1, $1);
 
-    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(1)), yylineno);
+    Type *type = NULL; // to be modified
+
+    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(type)), yylineno);
 }
       | VarDec LB INT RB { $$ = createNode("VarDec", @$.first_line, NTERM, unionNULL()); insertChildren($$, 4, $1, $2, $3, $4); }
       ;
 FunDec: ID LP {
-    debugPoint();
-    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(1)), yylineno);
+    Type *type = NULL;
+
+    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(type)), yylineno);
     shouldMerge = 1;
     pushScope(stack, initTable());
     }
@@ -116,7 +123,9 @@ FunDec: ID LP {
     insertChildren($$, 4, $1, $2, $4, $5); 
     }
       | ID LP RP {
-    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(1)), yylineno);
+    Type *type = NULL;
+
+    insert(getScope(stack), createNodeEntry($1->name, createEntryValue(type)), yylineno);
 
     $$ = createNode("FunDec", @$.first_line, NTERM, unionNULL());
     insertChildren($$, 3, $1, $2, $3);

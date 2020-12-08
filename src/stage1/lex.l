@@ -37,7 +37,7 @@ CONST const
 TYPE (int)|(float)|(char)
 LAMBDA lambda
 STRUCT struct
-FUNCTION function
+FUNC function
 
 IF if
 ELSE else
@@ -79,7 +79,7 @@ RC \}
 {TYPE} { yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL()); return TYPE; }
 {LAMBDA} { yylval = createNode("LAMBDA", yylineno, OTHERS, unionNULL()); return LAMBDA; }
 {STRUCT} { yylval = createNode("STRUCT", yylineno, OTHERS, unionNULL()); return STRUCT; }
-{FUNCTION} { yylval = createNode("FUNCTION", yylineno, OTHERS, unionNULL()); return FUNCTION; }
+{FUNC} { yylval = createNode("FUNC", yylineno, OTHERS, unionNULL()); return FUNC; }
 {IF} { yylval = createNode("IF", yylineno, OTHERS, unionNULL()); return IF; }
 {ELSE} { yylval = createNode("ELSE", yylineno, OTHERS, unionNULL()); return ELSE; }
 {WHILE} { yylval = createNode("WHILE", yylineno, OTHERS, unionNULL()); return WHILE; }

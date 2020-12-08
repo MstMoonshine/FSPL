@@ -53,4 +53,6 @@ Function *createFunction(FieldList *argList, Type *retType);
 int sameType(Type *type1, Type *type2);
 int structuralEqu(FieldList *fieldList1, FieldList *fieldList2);
 
+void printType(Type *type);
+
 #endif

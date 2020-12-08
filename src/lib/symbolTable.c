@@ -8,9 +8,11 @@
 /*
 Something about entryValue goes here...
 */
-entryValue createEntryValue(int a) {
+entryValue createEntryValue(Type *type) {
     entryValue newValue;
-    newValue.a = a;
+
+    newValue.type = type;
+
     return newValue;
 }
 
@@ -116,7 +118,8 @@ void printTable(symbolTable *symbt, int level) {
 
     for (int i = 0; i < level; i++) printf("  "); //indent
 
-    printf("%s: %d\n", symbt->entry->key, symbt->entry->value.a);
+    printf("%s: \n", symbt->entry->key);
+    printType(symbt->entry->value.type);
     printTable(symbt->left, level + 1);
     printTable(symbt->right, level + 1);
 }

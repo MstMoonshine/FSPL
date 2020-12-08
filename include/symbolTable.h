@@ -1,14 +1,25 @@
+/**
+* Symbol tables contains information about an identifier such as its character string (lexeme), its type, its position in storage and any other relevant information... 
+
+-- the Dragon Book
+
+Here we will be using a binary search tree as a symbol table in a scope.
+*/
+
+
 #ifndef SYMBOLTABLE_H
 #define SYMBOLTABLE_H
 
+#include "include/type.h"
+
 typedef struct entryValue
 {
-    int a;
+    Type *type;
 } entryValue;
 
 typedef struct nodeEntry
 {
-    char key[33]; //32 + 1 for security concern;
+    char key[33]; //32 + 1, 1 for '\0'
     entryValue value;
 } nodeEntry;
 
@@ -21,8 +32,9 @@ typedef struct binarySearchTree
 
 /*
 Something about entryValue goes here...
+The entryvalue mainly consists of the type of the symbol at the moment.
 */
-entryValue createEntryValue(int a);
+entryValue createEntryValue(Type *type);
 
 /* nodeEntry */
 nodeEntry *createNodeEntry(const char *key, entryValue value);

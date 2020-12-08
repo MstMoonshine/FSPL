@@ -1,6 +1,7 @@
 #include "include/type.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 Type *createPrimitiveType(const char *name, enum primitiveType primitive) {
     Type *newType = (Type *)malloc(sizeof(Type));
@@ -103,4 +104,27 @@ int structuralEqu(FieldList *fieldList1, FieldList *fieldList2) {
     if (cur1 || cur2) return 0; //one list is longer than the other
 
     return 1;
+}
+
+
+void printType(Type *type) {
+    printf("Type: ");
+    if (!type) return;
+
+    if (type->category == PRIMITIVE) {
+        if (type->content.primitive == VAR_INT)
+            printf("INT");
+        else if (type->content.primitive == VAR_FLOAT)
+            printf("FLOAT");
+        else if (type->content.primitive == VAR_CHAR)
+            printf("CHAR");
+    } else if (type->category == ARRAY) {
+        printf("ARRAY");
+    } else if (type->category == STRUCTURE) {
+        printf("STRUCTURE");
+    } else if (type->category == FUNCTION) {
+        printf("FUNCTION");
+    }
+
+    return;
 }
