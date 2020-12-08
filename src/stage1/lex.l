@@ -7,6 +7,7 @@
     #include "include/parsingTree.h"
     #include "include/symbolTable.h"
     #include "include/scopeStack.h"
+    #include "include/type.h"
     #include <string.h>
 
     short lexicalErrorExists = 0;
@@ -34,7 +35,10 @@ CHAR (\'.\')|{HEXCHAR}
 ID (_|[a-zA-Z])(_|[0-9a-zA-Z])*
 
 CONST const
-TYPE (int)|(float)|(char)
+TYPE {PRIMITIVE_INT}|{PRIMITIVE_FLAOT}|{PRIMITIVE_CHAR}
+PRIMITIVE_INT int
+PRIMITIVE_FLAOT float
+PRIMITIVE_CHAR char
 LAMBDA lambda
 STRUCT struct
 FUNC function
@@ -76,7 +80,21 @@ RC \}
 %%
 
 {CONST} { yylval = createNode("CONST", yylineno, OTHERS, unionNULL()); return CONST; }
-{TYPE} { yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL()); return TYPE; }
+{PRIMITIVE_INT} {
+    yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL());
+    setNodeType(yylval, primitive_int);
+    return TYPE; 
+}
+{PRIMITIVE_FLAOT} {
+    yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL());
+    setNodeType(yylval, primitive_float);
+    return TYPE; 
+}
+{PRIMITIVE_CHAR} {
+    yylval = createNode(yytext, yylineno, TYPE_TYPE, unionNULL());
+    setNodeType(yylval, primitive_char);
+    return TYPE; 
+}
 {LAMBDA} { yylval = createNode("LAMBDA", yylineno, OTHERS, unionNULL()); return LAMBDA; }
 {STRUCT} { yylval = createNode("STRUCT", yylineno, OTHERS, unionNULL()); return STRUCT; }
 {FUNC} { yylval = createNode("FUNC", yylineno, OTHERS, unionNULL()); return FUNC; }
@@ -140,8 +158,8 @@ RC \}
 [ \t] {}
 "\n" { yycolno = 1; }
 
-{INT}{ID} { yylval = createNode("", yylineno, TYPE_ID, unionNULL()); lexErrorHandler(); fprintf(stderr, "unknown lexeme %s\n", yytext); return ID; }
 
+{INT}{ID} { yylval = createNode("", yylineno, TYPE_ID, unionNULL()); lexErrorHandler(); fprintf(stderr, "unknown lexeme %s\n", yytext); return ID; }
 .|{WRONG_HEXCHAR} { yylval = createNode("", yylineno, TYPE_ID, unionNULL()); lexErrorHandler(); fprintf(stderr, "unknown lexeme %s\n", yytext); return MYSTERIOUS_LEXEME; }
 
 %%

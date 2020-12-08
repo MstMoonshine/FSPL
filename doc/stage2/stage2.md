@@ -67,8 +67,8 @@ This follows the common understanding of function equivalence: take the function
 
 There is a mutual recursion here: for function equivalence we will be needing structrual equivalence and for structral equivalence we need `sameType` for each field in turn.
 
-### Type information recording
-- Add the identifiers into the symbol table;
+### Type information recording during declaration
+- Deduct the type for the identifiers during declaration;
 - Add the type information at the same time.
 
 ### Type checking in expressions

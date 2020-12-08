@@ -3,6 +3,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+const Type PRI_INT = { .name = "", .category = PRIMITIVE, .content.primitive = VAR_INT };
+const Type PRI_FLOAT = { .name = "", .category = PRIMITIVE, .content.primitive = VAR_FLOAT };
+const Type PRI_CHAR = { .name = "", .category = PRIMITIVE, .content.primitive = VAR_CHAR };
+
+Type *primitive_int = (Type *)&PRI_INT;
+Type *primitive_float = (Type *)&PRI_FLOAT;
+Type *primitive_char = (Type *)&PRI_CHAR;
+
 Type *createPrimitiveType(const char *name, enum primitiveType primitive) {
     Type *newType = (Type *)malloc(sizeof(Type));
 

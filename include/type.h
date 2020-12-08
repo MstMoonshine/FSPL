@@ -18,6 +18,9 @@ typedef struct Type
     union TypeContent content;
 } Type;
 
+extern const Type PRI_INT, PRI_FLOAT, PRI_CHAR;
+extern Type *primitive_int, *primitive_float, *primitive_char;
+
 typedef struct Array {
     struct Type *base;
     int size;

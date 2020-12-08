@@ -120,6 +120,7 @@ void printTable(symbolTable *symbt, int level) {
 
     printf("%s: \n", symbt->entry->key);
     printType(symbt->entry->value.type);
+    
     printTable(symbt->left, level + 1);
     printTable(symbt->right, level + 1);
 }

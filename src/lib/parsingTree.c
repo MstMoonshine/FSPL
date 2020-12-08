@@ -2,7 +2,7 @@
 
 union values unionNULL() {
     union values value;
-    value.intVal = 0; 
+    value.charVal = 0; 
     return value;
 }
 
@@ -25,28 +25,36 @@ union values unionChar(char c) {
 }
 
 
-tree *createNode(char *name, int lineno, symType type, union values value) {
+tree *createNode(char *name, int lineno, SymType symType, union values value) {
     tree *newNode = (tree *)malloc(sizeof(tree));
 
     newNode->name = (char *)malloc((strlen(name) + 1) * sizeof(char));
     strcpy(newNode->name, name);
     newNode->name[strlen(name)] = 0;
     newNode->lineno = lineno;
-    newNode->type = type;
+    newNode->symType = symType;
     newNode->value = value;
+    newNode->type = NULL;
+
     newNode->numOfChildren = 0;
     newNode->children = NULL;
 
     return newNode;
 }
 
-void setNode(tree *self, char *name, int lineno, symType type, union values value) {
-    if (!self) return;
+void setNode(tree *node, char *name, int lineno, SymType symType, union values value) {
+    if (!node) return;
 
-    self->name = name;
-    self->lineno = lineno;
-    self->type = type;
-    self->value = value;
+    node->name = name;
+    node->lineno = lineno;
+    node->symType = symType;
+    node->value = value;
+}
+
+void setNodeType(tree *node, Type *type) {
+    if (!node) return;
+
+    node->type = type;
 }
 
 void insertChildren(tree *self, int num, ...) {
@@ -75,21 +83,21 @@ void printTree(tree *self, int depth) {
 
     for (int i = 0; i < depth; i++) printf("  ");
 
-    if (self->type == NTERM) {
+    if (self->symType == NTERM) {
         printf("%s (%d)\n", self->name, self->lineno);
-    } else if (self->type == TYPE_INT) {
+    } else if (self->symType == TYPE_INT) {
         printf("INT: %d\n", self->value.intVal);
-    } else if (self->type == TYPE_FLOAT) {
+    } else if (self->symType == TYPE_FLOAT) {
         printf("FLOAT: %g\n", self->value.floatVal);
-    } else if (self->type == TYPE_CHAR) {
+    } else if (self->symType == TYPE_CHAR) {
         printf("CHAR: \'%c\'\n", self->value.charVal);
-    } else if (self->type == TYPE_HEXCHAR) {
+    } else if (self->symType == TYPE_HEXCHAR) {
         printf("CHAR: \'\\x%02hhx\'\n", self->value.charVal);
-    } else if (self->type == TYPE_ID) {
+    } else if (self->symType == TYPE_ID) {
         printf("ID: %s\n", self->name);
-    } else if (self->type == TYPE_TYPE) {
+    } else if (self->symType == TYPE_TYPE) {
         printf("TYPE: %s\n", self->name);
-    } else if (self->type == OTHERS) {
+    } else if (self->symType == OTHERS) {
         printf("%s\n", self->name);
     }
 
